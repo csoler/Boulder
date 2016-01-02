@@ -2,15 +2,14 @@
 #include <QGLViewer/qglviewer.h>
 
 #include "Level.h"
+#include "GameDrawer.h"
 
 class BoulderGame ;
 
-class GameViewer: public QGLViewer
+class GameViewer: public QWidget
 {
 public:
     GameViewer(QWidget *parent=NULL) ;
-
-    virtual void draw() ;
 
     void setGame(BoulderGame *g) ;
 
@@ -19,22 +18,12 @@ public:
     virtual void mousePressEvent(QMouseEvent *e) ;
     virtual void mouseReleaseEvent(QMouseEvent *e) ;
     virtual void mouseMoveEvent(QMouseEvent *e) ;
+    virtual void resizeEvent(int W,int H) ;
+    virtual void paintEvent(QPaintEvent *);
+    
 private:
-    void drawBackgroundGrid();
-    void drawGameContent();
-    void pasteSprite(float x,float y,const QPixmap& pix) ;
-    
-    float gameCoordToWindowCoordY(int i) ;
-    float gameCoordToWindowCoordX(int i) ;
-
-    QPixmap getImageForObjectId(const Level::ObjectId &oid);
-    QPixmap getGameSprite(const Level::ObjectId& oid,int resolution);
-
-    typedef std::map<uint64_t,QPixmap> ImageCache ;
-    
-    ImageCache mImageCache ;
-
     BoulderGame *mGame ;
+    GameDrawer mGameDrawer ;
 
     float mSceneCenterX;
     float mSceneCenterY;
