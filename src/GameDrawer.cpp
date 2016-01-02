@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QPainter>
 #include <QColor>
 
@@ -42,6 +44,17 @@ void GameDrawer::update(const BoulderGame& game,int w,int h)
 
     for(uint j=0;j<=level.sizeY();++j)
 	    painter.drawLine(QPointF(gameCoordToWindowCoordX(j),gameCoordToWindowCoordY(0)),  QPointF(gameCoordToWindowCoordX(j),gameCoordToWindowCoordY(level.sizeX()))) ;
+    
+    int resolution = SQUARE_SIZE_IN_PIXELS ;
+            
+    for(int i=0;i<game.currentState().sizeX();++i)
+	    for(int j=0;j<game.currentState().sizeY();++j)
+	    {
+                    float mx = gameCoordToWindowCoordX(i) ;
+                    float my = gameCoordToWindowCoordX(j) ;
+                    
+                    painter.drawPixmap(mx,my,getGameSprite( game.currentState()(i,j), resolution )) ;
+	    }
 }
 
 QPixmap GameDrawer::pixmap() const
@@ -49,69 +62,45 @@ QPixmap GameDrawer::pixmap() const
 	return mDrawBuffer ;
 }
 
-//void GameViewer::pasteSprite(float x,float y,const QPixmap& pix)
-//{
-//    std::cerr << "Pasting sprite" << std::endl;
-//    glMatrixMode(GL_MODELVIEW) ;
-//    glPushMatrix();
-//    glLoadIdentity() ;
-//    
-//    glTranslatef(x,y,0) ;
-//    
-//    glDrawPixels(pix.width(),pix.height(),GL_RGBA,GL_UNSIGNED_BYTE,const_cast<QPixmap*>(&pix)->data_ptr().data()) ;
-//    
-//    glPopMatrix();
-//}
+QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
+{
+    switch(oid)
+    {
+    case Level::Wall: return QPixmap(":/images/wall.png");
+    default:
+        QColor col = QColor::fromHsv(oid*20,255,255) ;
+        QPixmap pix(128,128) ;
+        pix.fill(col) ;
+        
+        return pix ;
+    }
+}
 
-//QPixmap GameViewer::getImageForObjectId(const Level::ObjectId& oid)
-//{
-//    switch(oid)
-//    {
-//    //case Level::Wall: return QPixmap(":/images/wall.png").toPixmap() ;
-//    default:
-//        QColor col = QColor::fromHsv(oid*20,255,255) ;
-//        QPixmap pix(128,128) ;
-//        pix.fill(col) ;
-//        
-//        return pix ;
-//    }
-//}
-//
-//QPixmap GameViewer::getGameSprite(const Level::ObjectId& oid,int resolution)
-//{
-//    // store them in a cache
-//    
-//    uint32_t item_id = (int)oid + 1000*resolution ;	// this should allow enough object ids!
-//    
-//    ImageCache::const_iterator it = mImageCache.find(item_id) ;
-//    
-//    if(it == mImageCache.end())
-//    {
-//        std::cerr << "Image for id " << oid << " and resolution " << resolution << " not in cache. Creating!" << std::endl;
-//        
-//        QPixmap pix = getImageForObjectId(oid).scaled(QSize(resolution,resolution),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
-//        
-//        mImageCache[item_id] = pix ;
-//        
-//        return pix ;
-//    }
-//    else
-//        return it->second ;
-//}
+QPixmap GameDrawer::getGameSprite(const Level::ObjectId& oid,int resolution)
+{
+    // store them in a cache
+    
+    uint32_t item_id = (int)oid + 1000*resolution ;	// this should allow enough object ids!
+    
+    ImageCache::const_iterator it = mImageCache.find(item_id) ;
+    
+    if(it == mImageCache.end())
+    {
+        std::cerr << "Image for id " << oid << " and resolution " << resolution << " not in cache. Creating!" << std::endl;
+        
+        QPixmap pix = getImageForObjectId(oid).scaled(QSize(resolution,resolution),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+        
+        mImageCache[item_id] = pix ;
+        
+        return pix ;
+    }
+    else
+        return it->second ;
+}
 
-//void GameViewer::drawGameContent()
+//void GameDrawer::drawGameContent(QPainter& painter)
 //{
 //    if(!mGame)
 //        return ;
 //    
-//    int resolution = SQUARE_SIZE_IN_PIXELS ;
-//            
-//    for(int i=0;i<mGame->currentState().sizeX();++i)
-//	    for(int j=0;j<mGame->currentState().sizeY();++j)
-//	    {
-//                    float mx = gameCoordToWindowCoordX(i) ;
-//                    float my = gameCoordToWindowCoordX(j) ;
-//                    
-//                    pasteSprite(my,my,getGameSprite( mGame->currentState()(i,j), resolution )) ;
-//	    }
 //}

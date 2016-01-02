@@ -1,6 +1,9 @@
 #pragma once
 
+#include <map>
 #include <QPixmap>
+
+#include "Level.h"
 
 class BoulderGame ;
 
@@ -18,6 +21,9 @@ class GameDrawer
 	float gameCoordToWindowCoordX(int i)  ;
 	float gameCoordToWindowCoordY(int j)  ;
     
+    	QPixmap getImageForObjectId(const Level::ObjectId &oid);
+	QPixmap getGameSprite(const Level::ObjectId& oid,int resolution);
+        
 //private:
 //    void drawBackgroundGrid();
 //    void drawGameContent();
@@ -29,9 +35,10 @@ class GameDrawer
 //    QPixmap getImageForObjectId(const Level::ObjectId &oid);
 //    QPixmap getGameSprite(const Level::ObjectId& oid,int resolution);
 //
-//    typedef std::map<uint64_t,QPixmap> ImageCache ;
-//    
-//    ImageCache mImageCache ;
-
+    
+    typedef std::map<uint64_t,QPixmap> ImageCache ;
+    
+    ImageCache mImageCache ;
+    
 };
 

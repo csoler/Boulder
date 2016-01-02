@@ -5,6 +5,8 @@ QT += xml
 
 FORMS = GameInterface.ui
 
+RESOURCES = images.qrc
+
 SOURCES = main.cpp \
           GameViewer.cpp \
 	  GameInterface.cpp \
