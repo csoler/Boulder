@@ -1,9 +1,9 @@
 TEMPLATE = app
 
-FORMS += GameInterface.ui
-
 CONFIG += qt qglviewer 
-QT += xml
+QT += xml 
+
+FORMS = GameInterface.ui
 
 SOURCES = main.cpp \
           GameViewer.cpp \
@@ -16,4 +16,5 @@ HEADERS = GameViewer.h \
 	  BoulderGame.h \
           Level.h
 
-
+OBJECTS_DIR = .obj
+TARGET = boulder
