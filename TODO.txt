@@ -1,0 +1,6 @@
+Tasks
+	[ ]   interface with 
+	[ ]   level editor
+	[ ]   level load/save
+	[ ]   game loop
+	[ ]   
