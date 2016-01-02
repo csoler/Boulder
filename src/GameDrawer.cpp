@@ -29,7 +29,7 @@ void GameDrawer::update(const BoulderGame& game,int w,int h)
     if(mDrawBuffer.width() != w || mDrawBuffer.height() != h)
         mDrawBuffer = QPixmap(w,h) ;
     
-    mDrawBuffer.fill(QColor::fromRgb(1,1,1)) ;
+    mDrawBuffer.fill(QColor::fromRgb(255,255,255)) ;
     
     QPainter painter(&mDrawBuffer) ;
     

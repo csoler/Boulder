@@ -18,7 +18,7 @@ public:
     virtual void mousePressEvent(QMouseEvent *e) ;
     virtual void mouseReleaseEvent(QMouseEvent *e) ;
     virtual void mouseMoveEvent(QMouseEvent *e) ;
-    virtual void resizeEvent(int W,int H) ;
+    virtual void resizeEvent(QResizeEvent *e) ;
     virtual void paintEvent(QPaintEvent *);
     
 private:

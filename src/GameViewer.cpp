@@ -57,15 +57,18 @@ void GameViewer::setGame(BoulderGame *g)
     mGameDrawer.update(*g,width(),height()) ;
     update() ;
 }
-void GameViewer::resizeEvent(int W,int H)
+void GameViewer::resizeEvent(QResizeEvent *e)
 {
-    mGameDrawer.update(*mGame,width(),height()) ;
+    if(mGame != NULL)
+	    mGameDrawer.update(*mGame,width(),height()) ;
+    
     update() ;
 }
 
 void GameViewer::paintEvent(QPaintEvent *)
 {
-    std::cerr << "In paint event" << std::endl;
     QStylePainter(this).drawPixmap(0,0,mGameDrawer.pixmap()) ;
+    
+    std::cerr << "In paint event. pasting pixmap of size " << mGameDrawer.pixmap().width() << "x" << mGameDrawer.pixmap().height() << std::endl;
 }
 
