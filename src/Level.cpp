@@ -43,6 +43,9 @@ void Level::initDefault()
 
 	for(int i=0;i<50;++i)
 		operator()(lrand48()%mSizeX,lrand48()%mSizeY) = Level::Wall ;
+    
+	for(int i=0;i<50;++i)
+		operator()(1+(lrand48()%(mSizeX-1)),1+(lrand48()%(mSizeY-1))) = Level::Stone ;
 }
 
 

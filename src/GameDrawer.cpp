@@ -66,7 +66,9 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
 {
     switch(oid)
     {
-    case Level::Wall: return QPixmap(":/images/wall.png");
+    case Level::Wall:  return QPixmap(":/images/wall.png");
+    case Level::Stone: return QPixmap(":/images/stone.png");
+    case Level::Earth: return QPixmap(":/images/ground.png");
     default:
         QColor col = QColor::fromHsv(oid*20,255,255) ;
         QPixmap pix(128,128) ;
