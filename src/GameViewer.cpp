@@ -18,6 +18,7 @@ GameViewer::GameViewer(QWidget *parent)
     mSceneCenterY = 0 ;
     
     setMouseTracking(true) ;
+    setFocusPolicy(Qt::StrongFocus) ;
 }
 
 void GameViewer::mousePressEvent(QMouseEvent *e)
@@ -70,5 +71,38 @@ void GameViewer::paintEvent(QPaintEvent *)
     QStylePainter(this).drawPixmap(0,0,mGameDrawer.pixmap()) ;
     
     std::cerr << "In paint event. pasting pixmap of size " << mGameDrawer.pixmap().width() << "x" << mGameDrawer.pixmap().height() << std::endl;
+}
+
+void GameViewer::keyPressEvent(QKeyEvent *e)
+{
+    std::cerr << "In key press event!" << std::endl;
+    e->accept() ;
+    bool redraw = false ;
+    
+    switch(e->key())
+    {
+    	case Qt::Key_Left: mGame->currentState().movePlayer(Level::Left) ;
+        			redraw = true ;
+        			break ;
+        
+    	case Qt::Key_Right:mGame->currentState().movePlayer(Level::Right) ;
+        			redraw = true ;
+        			break ;
+    	case Qt::Key_Up:   mGame->currentState().movePlayer(Level::Top) ;
+        			redraw = true ;
+        			break ;
+    	case Qt::Key_Down: mGame->currentState().movePlayer(Level::Bottom) ;
+        			redraw = true ;
+        			break ;
+        
+    default:
+        e->ignore() ;
+    }
+    
+    if(redraw)
+    {
+	mGameDrawer.update(*mGame,width(),height()) ;
+	update() ;
+    }
 }
 

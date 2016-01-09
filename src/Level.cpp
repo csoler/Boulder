@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <iostream>
 
 #include "Level.h"
 
@@ -21,6 +22,29 @@ Level::ObjectId Level::operator()(uint32_t i,uint32_t j) const
 	assert(j < mSizeY) ;
 
 	return mContent[mSizeX * j + i] ;
+}
+
+void Level::movePlayer(MoveDirection d)
+{
+    uint32_t old_player_x = mPlayerX ;
+    uint32_t old_player_y = mPlayerY ;
+    
+    switch(d)
+    {
+    case Left: if(mPlayerX > 0) mPlayerX-- ;
+	    break ;
+    case Right: if(mPlayerX < mSizeX-1) mPlayerX++ ;
+	    break ;
+    case Top:  if(mPlayerY > 0) mPlayerY-- ;
+	    break ;
+    case Bottom: if(mPlayerY < mSizeY-1) mPlayerY++ ;
+	    break ;
+    default:
+	    std::cerr << "(EE) untreated case!" << std::endl;
+    }
+    
+    operator()(old_player_x,old_player_y) = Void ;
+    operator()(mPlayerX,mPlayerY) = Player ;
 }
 
 void Level::initDefault()
@@ -46,6 +70,11 @@ void Level::initDefault()
     
 	for(int i=0;i<50;++i)
 		operator()(1+(lrand48()%(mSizeX-1)),1+(lrand48()%(mSizeY-1))) = Level::Stone ;
+    
+    	mPlayerX = 4 ;
+    	mPlayerY = 4 ;
+        
+    	operator()(mPlayerX,mPlayerY) = Level::Player ;
 }
 
 

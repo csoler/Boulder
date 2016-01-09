@@ -21,6 +21,8 @@ public:
     virtual void resizeEvent(QResizeEvent *e) ;
     virtual void paintEvent(QPaintEvent *);
     
+    virtual void keyPressEvent(QKeyEvent *e) ;
+    
 private:
     BoulderGame *mGame ;
     GameDrawer mGameDrawer ;
