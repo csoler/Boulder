@@ -6,6 +6,8 @@
 #include "GameViewer.h"
 #include "BoulderGame.h"
 
+//#define DEBUG_GAME_VIEWER 1
+
 static const uint32_t SQUARE_SIZE_IN_PIXELS = 50 ;
 
 GameViewer::GameViewer(QWidget *parent)
@@ -69,8 +71,9 @@ void GameViewer::resizeEvent(QResizeEvent *e)
 void GameViewer::paintEvent(QPaintEvent *)
 {
     QStylePainter(this).drawPixmap(0,0,mGameDrawer.pixmap()) ;
-    
+#ifdef DEBUG_GAME_VIEWER    
     std::cerr << "In paint event. pasting pixmap of size " << mGameDrawer.pixmap().width() << "x" << mGameDrawer.pixmap().height() << std::endl;
+#endif
 }
 
 void GameViewer::keyPressEvent(QKeyEvent *e)

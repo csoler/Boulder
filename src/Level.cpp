@@ -29,22 +29,31 @@ void Level::movePlayer(MoveDirection d)
     uint32_t old_player_x = mPlayerX ;
     uint32_t old_player_y = mPlayerY ;
     
+    uint32_t new_player_x = mPlayerX;
+    uint32_t new_player_y = mPlayerY;
+    
     switch(d)
     {
-    case Left: if(mPlayerX > 0) mPlayerX-- ;
+    case Left: if(mPlayerX > 0) new_player_x-- ;
 	    break ;
-    case Right: if(mPlayerX < mSizeX-1) mPlayerX++ ;
+    case Right: if(mPlayerX < mSizeX-1) new_player_x++ ;
 	    break ;
-    case Top:  if(mPlayerY > 0) mPlayerY-- ;
+    case Top:  if(mPlayerY > 0) new_player_y-- ;
 	    break ;
-    case Bottom: if(mPlayerY < mSizeY-1) mPlayerY++ ;
+    case Bottom: if(mPlayerY < mSizeY-1) new_player_y++ ;
 	    break ;
     default:
 	    std::cerr << "(EE) untreated case!" << std::endl;
     }
     
-    operator()(old_player_x,old_player_y) = Void ;
-    operator()(mPlayerX,mPlayerY) = Player ;
+    if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void)
+    {
+            mPlayerX = new_player_x ;
+            mPlayerY = new_player_y ;
+            
+	    operator()(old_player_x,old_player_y) = Level::Void ;
+	    operator()(mPlayerX,mPlayerY) = Level::Player ;
+    }
 }
 
 void Level::initDefault()

@@ -31,7 +31,7 @@ void GameDrawer::update(const BoulderGame& game,int w,int h)
     if(mDrawBuffer.width() != w || mDrawBuffer.height() != h)
         mDrawBuffer = QPixmap(w,h) ;
     
-    mDrawBuffer.fill(QColor::fromRgb(255,255,255)) ;
+    mDrawBuffer.fill(QColor::fromRgb(0,0,0)) ;
     
     QPainter painter(&mDrawBuffer) ;
     
@@ -69,6 +69,13 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
     case Level::Wall:  return QPixmap(":/images/wall.png");
     case Level::Stone: return QPixmap(":/images/stone.png");
     case Level::Earth: return QPixmap(":/images/ground.png");
+            
+    case Level::Void:  {
+	    QColor col = QColor::fromHsv(0,255,0) ;
+	    QPixmap pix(128,128) ;
+	    pix.fill(col) ;
+	    return pix ;
+    }
     default:
         QColor col = QColor::fromHsv(oid*20,255,255) ;
         QPixmap pix(128,128) ;
