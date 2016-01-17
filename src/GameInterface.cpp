@@ -103,6 +103,8 @@ void GameInterface::newGame()
 		delete _current_game ;
 
 	_current_game = new BoulderGame ;
+    	_current_game->start();
+        
     	gameViewer->setGame(_current_game) ;
 }
 

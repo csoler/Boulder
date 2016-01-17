@@ -57,8 +57,20 @@ void GameViewer::setGame(BoulderGame *g)
     //setSceneRadius(2*std::max(mGame->currentState().sizeX(),mGame->currentState().sizeY())) ;
     //updateGL() ;
     
+    QObject::connect(mGame,SIGNAL(changed()),this,SLOT(reDraw())) ;
+                     
     mGameDrawer.update(*g,width(),height()) ;
     update() ;
+}
+
+void GameViewer::reDraw() 
+{
+	if(mGame != NULL)
+	{
+		std::cerr << "redraw!" << std::endl;
+		mGameDrawer.update(*mGame,width(),height()) ;
+		update();
+	}
 }
 void GameViewer::resizeEvent(QResizeEvent *e)
 {

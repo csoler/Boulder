@@ -8,6 +8,8 @@ class BoulderGame ;
 
 class GameViewer: public QWidget
 {
+    Q_OBJECT
+    
 public:
     GameViewer(QWidget *parent=NULL) ;
 
@@ -22,6 +24,9 @@ public:
     virtual void paintEvent(QPaintEvent *);
     
     virtual void keyPressEvent(QKeyEvent *e) ;
+    
+public slots:
+    void reDraw() ;
     
 private:
     BoulderGame *mGame ;
