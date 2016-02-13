@@ -58,8 +58,8 @@ void Level::movePlayer(MoveDirection d)
 
 void Level::initDefault()
 {
-	mSizeX = 100 ;
-	mSizeY = 80 ;
+	mSizeX = 50 ;
+	mSizeY = 30 ;
 
 	mContent.resize(mSizeX*mSizeY,Level::Earth) ;
 
@@ -74,16 +74,17 @@ void Level::initDefault()
 		operator()(mSizeX-1,j) = Level::Wall ;
 	}
 
-	for(int i=0;i<50;++i)
+	for(int i=0;i<100;++i)
 		operator()(lrand48()%mSizeX,lrand48()%mSizeY) = Level::Wall ;
     
-	for(int i=0;i<50;++i)
-		operator()(1+(lrand48()%(mSizeX-1)),1+(lrand48()%(mSizeY-1))) = Level::Stone ;
+	for(int i=0;i<100;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Stone ;
     
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;
         
     	operator()(mPlayerX,mPlayerY) = Level::Player ;
+        operator()(mSizeX-3,mSizeY-3) = Level::Exit ;
 }
 
 
