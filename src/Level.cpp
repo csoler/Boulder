@@ -7,6 +7,8 @@
 Level::Level()
 {
 	initDefault() ;
+    
+    	mFinished = false ;
 }
 
 Level::ObjectId& Level::operator()(uint32_t i,uint32_t j) 
@@ -26,6 +28,9 @@ Level::ObjectId Level::operator()(uint32_t i,uint32_t j) const
 
 void Level::movePlayer(MoveDirection d)
 {
+    if(mFinished)
+        return ;
+    
     uint32_t old_player_x = mPlayerX ;
     uint32_t old_player_y = mPlayerY ;
     
@@ -46,13 +51,41 @@ void Level::movePlayer(MoveDirection d)
 	    std::cerr << "(EE) untreated case!" << std::endl;
     }
     
-    if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void)
+    if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void || operator()(new_player_x,new_player_y) == Level::Exit)
     {
+        if(operator()(new_player_x,new_player_y) == Level::Exit)
+            mFinished = true ;
+        
             mPlayerX = new_player_x ;
             mPlayerY = new_player_y ;
             
 	    operator()(old_player_x,old_player_y) = Level::Void ;
 	    operator()(mPlayerX,mPlayerY) = Level::Player ;
+            
+    }
+    if(operator()(new_player_x,new_player_y) == Level::Stone 
+            && d == Right 
+            && new_player_x + 1 < mSizeX-1
+            && operator()(new_player_x + 1,new_player_y) == Level::Void)
+    {
+        operator()(new_player_x + 1,new_player_y) = Level::Stone ;
+        operator()(new_player_x    ,new_player_y) = Level::Player ;
+        operator()(mPlayerX        ,mPlayerY    ) = Level::Void ;
+        
+        mPlayerX = new_player_x ;
+        mPlayerY = new_player_y ;
+    }
+    if(operator()(new_player_x,new_player_y) == Level::Stone 
+            && d == Left 
+            && new_player_x - 1 > 0
+            && operator()(new_player_x - 1,new_player_y) == Level::Void)
+    {
+        operator()(new_player_x - 1,new_player_y) = Level::Stone ;
+        operator()(new_player_x    ,new_player_y) = Level::Player ;
+        operator()(mPlayerX        ,mPlayerY    ) = Level::Void ;
+        
+        mPlayerX = new_player_x ;
+        mPlayerY = new_player_y ;
     }
 }
 

@@ -1,6 +1,7 @@
 #include <QGLViewer/constraint.h>
 #include <QMouseEvent>
 #include <QStylePainter>
+#include <QMessageBox>
 
 #include "Level.h"
 #include "GameViewer.h"
@@ -71,6 +72,7 @@ void GameViewer::reDraw()
 		mGameDrawer.update(*mGame,width(),height()) ;
 		update();
 	}
+ 
 }
 void GameViewer::resizeEvent(QResizeEvent *e)
 {
@@ -114,6 +116,7 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
         e->ignore() ;
     }
     
+   
     if(redraw)
     {
 	mGameDrawer.update(*mGame,width(),height()) ;

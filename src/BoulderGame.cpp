@@ -1,5 +1,6 @@
 #include <iostream>
 #include <QTimer>
+#include <QMessageBox>
 #include "BoulderGame.h"
 
 BoulderGame::BoulderGame()
@@ -70,4 +71,13 @@ void BoulderGame::timerEvent()
 	    emit changed() ;
     }
     mtx.unlock() ;
+    
+    if(mLevelState.finished())
+    {
+        QMessageBox::information(NULL,QString("Game is terminated"),QString("C'est gagne!")) ;
+	mTimer->stop() ;
+    }
 }
+
+
+

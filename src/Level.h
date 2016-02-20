@@ -26,6 +26,8 @@ class Level
         
 		void initDefault();
 
+        	bool finished() const { return mFinished ; }
+            
 		ObjectId operator()(uint32_t i,uint32_t j) const ;
 		ObjectId& operator()(uint32_t i,uint32_t j) ;
 
@@ -41,4 +43,5 @@ class Level
         	uint32_t mPlayerY ;
             
 		std::vector<ObjectId> mContent ;
+        	bool mFinished ;
 };
