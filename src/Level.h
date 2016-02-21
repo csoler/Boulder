@@ -7,6 +7,7 @@ class Level
 {
 	public:
 		Level();
+		Level(const std::string& fname);
 
 		typedef enum {
 							Void    = 0x00,
@@ -35,7 +36,11 @@ class Level
             
         	uint32_t sizeX() const { return mSizeX ; }
         	uint32_t sizeY() const { return mSizeY ; }
+            
+            	void save(const std::string& fname) const ;
+            	void load(const std::string& fname) ;
 	private:
+                
 		uint32_t mSizeX ;
 		uint32_t mSizeY ;
 

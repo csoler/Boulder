@@ -1,13 +1,18 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
+#include <fstream>
 
 #include "Level.h"
 
 Level::Level()
 {
 	initDefault() ;
-    
+    	mFinished = false ;
+}
+Level::Level(const std::string& fname)
+{
+	load(fname) ;
     	mFinished = false ;
 }
 
@@ -87,6 +92,49 @@ void Level::movePlayer(MoveDirection d)
         mPlayerX = new_player_x ;
         mPlayerY = new_player_y ;
     }
+}
+void Level::load(const std::string &fname) 
+{
+   std::ifstream is(fname.c_str(),std::ios_base::in) ;
+   
+   is >> mSizeX ;
+   is >> mSizeY ;
+   is >> mPlayerX ;
+   is >> mPlayerY ;
+
+   std::cerr << "Loading game of size " << mSizeX << " x " << mSizeY << std::endl;
+   
+   mContent.resize(mSizeX*mSizeY,Level::Earth) ;
+   
+   for(int i=0;i<mSizeY;++i)
+   {
+       for(int j=0;j<mSizeX;++j)
+       {
+           unsigned char s ;
+           is >> s ;
+           operator()(j,i) = Level::ObjectId(s - ' ');
+       }
+       
+       //unsigned char s ;
+       //is >> s ;
+   }
+   is.close() ;
+}
+void Level::save(const std::string &fname) const
+{
+   std::ofstream of(fname.c_str()) ;
+   
+   of << mSizeX << " " << mSizeY << std::endl;
+   of << mPlayerX << " " << mPlayerY << std::endl;
+
+   for(int i=0;i<mSizeY;++i)
+   {
+       for(int j=0;j<mSizeX;++j)
+           of << (unsigned char)(operator()(j,i) + ' ');
+       
+       of << std::endl;
+   }
+   of.close() ;
 }
 
 void Level::initDefault()

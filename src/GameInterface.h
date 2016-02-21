@@ -23,7 +23,9 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 	private slots:
 		void quit() const ;
 		void newGame() ;
+		void saveGame() const ;
 		void about() const ;
+		void loadGame() ;
 
 	private:
 		BoulderGame *_current_game ;

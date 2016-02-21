@@ -22,6 +22,9 @@ GameInterface::GameInterface()
 	setupUi(this) ;
 
 	connect(actionNew,SIGNAL(triggered()),this,SLOT(newGame())) ;
+	connect(actionSave,SIGNAL(triggered()),this,SLOT(saveGame())) ;
+	connect(actionLoad,SIGNAL(triggered()),this,SLOT(loadGame())) ;
+    
 	//connect(actionQuit,SIGNAL(triggered()),this,SLOT(quit())) ;
 	//connect(actionAbout,SIGNAL(triggered()),this,SLOT(about())) ;
     
@@ -99,15 +102,39 @@ void GameInterface::quit() const
 
 void GameInterface::newGame()
 {
-	if(_current_game != NULL)
-		delete _current_game ;
+    if(_current_game != NULL)
+    {
+	    _current_game->stop();
+	    delete _current_game ;
+    }
 
-	_current_game = new BoulderGame ;
-    	_current_game->start();
-        
-    	gameViewer->setGame(_current_game) ;
+    _current_game = new BoulderGame ;
+    _current_game->start();
+
+    gameViewer->setGame(_current_game) ;
+}
+void GameInterface::saveGame() const
+{
+	if(_current_game == NULL)
+        	return ;
+
+    	_current_game->currentState().save("level.blv") ;
 }
 
+void GameInterface::loadGame() 
+{
+    if(_current_game != NULL)
+    {
+	    _current_game->stop();
+	    delete _current_game ;
+    }
+    
+    _current_game = new BoulderGame ;
+    _current_game->currentState().load("level.blv") ;
+
+    gameViewer->setGame(_current_game) ;
+    _current_game->start();
+}
 void GameInterface::about() const
 {
 	QMessageBox::information(NULL,QString("About Boulder"),
