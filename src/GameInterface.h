@@ -23,6 +23,7 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 	private slots:
 		void quit() const ;
 		void newGame() ;
+		void editGame() ;
 		void saveGame() const ;
 		void about() const ;
 		void loadGame() ;

@@ -48,6 +48,10 @@ void GameViewer::mouseMoveEvent(QMouseEvent *e)
     mOldMouseY = height()-1-e->y() ;
 }
 
+void GameViewer::pixelCoordinatesToGameCoordinate(int x,int y,int& i,int& j) const
+{
+}
+
 void GameViewer::setGame(BoulderGame *g)
 {
     if(mGame != NULL)
@@ -90,30 +94,59 @@ void GameViewer::paintEvent(QPaintEvent *)
 #endif
 }
 
+void GameViewer::setCurrentMode(GameMode m)
+{
+    mCurrentMode = m ;
+}
+    
 void GameViewer::keyPressEvent(QKeyEvent *e)
 {
-    std::cerr << "In key press event!" << std::endl;
+//    std::cerr << "In key press event x=" << mOldMouseX << ", y=" << mOldMouseY 
+//              << ", game coordinates: " << mGameDrawer.windowCoordToGameCoordX(mOldMouseX) 
+//              << " " << mGameDrawer.windowCoordToGameCoordY(height() - mOldMouseY) 
+//              << std::endl;
+    
+    int i = mGameDrawer.windowCoordToGameCoordX(mOldMouseX) ;
+    int j = mGameDrawer.windowCoordToGameCoordY(height() -1 -mOldMouseY) ;
+    
     e->accept() ;
     bool redraw = false ;
     
     switch(e->key())
     {
-    	case Qt::Key_Left: mGame->currentState().movePlayer(Level::Left) ;
-        			redraw = true ;
-        			break ;
-        
-    	case Qt::Key_Right:mGame->currentState().movePlayer(Level::Right) ;
-        			redraw = true ;
-        			break ;
-    	case Qt::Key_Up:   mGame->currentState().movePlayer(Level::Top) ;
-        			redraw = true ;
-        			break ;
-    	case Qt::Key_Down: mGame->currentState().movePlayer(Level::Bottom) ;
-        			redraw = true ;
-        			break ;
-        
+    case Qt::Key_Left: mGame->currentState().movePlayer(Level::Left) ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_Right:mGame->currentState().movePlayer(Level::Right) ;
+	    redraw = true ;
+	    break ;
+    case Qt::Key_Up:   mGame->currentState().movePlayer(Level::Top) ;
+	    redraw = true ;
+	    break ;
+    case Qt::Key_Down: mGame->currentState().movePlayer(Level::Bottom) ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_W: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+		            mGame->currentState()(i,j) = Level::Wall ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_S: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+
+        mGame->currentState()(i,j) = Level::Stone ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_E: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+
+        mGame->currentState()(i,j) = Level::Earth ;
+	    redraw = true ;
+	    break ;
+
     default:
-        e->ignore() ;
+	    e->ignore() ;
     }
     
    

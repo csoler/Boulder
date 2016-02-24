@@ -15,12 +15,15 @@ class GameDrawer
 		virtual void update(const BoulderGame& game,int w,int h) ;
 		virtual QPixmap pixmap() const ;
 
-	private:
-		QPixmap mDrawBuffer ;
-        
 	float gameCoordToWindowCoordX(int i)  ;
 	float gameCoordToWindowCoordY(int j)  ;
     
+    	int windowCoordToGameCoordX(float x) ;
+    	int windowCoordToGameCoordY(float y) ;
+
+	private:
+		QPixmap mDrawBuffer ;
+        
     	QPixmap getImageForObjectId(const Level::ObjectId &oid);
 	QPixmap getGameSprite(const Level::ObjectId& oid,int resolution);
         

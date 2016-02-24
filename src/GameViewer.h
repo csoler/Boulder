@@ -11,9 +11,12 @@ class GameViewer: public QWidget
     Q_OBJECT
     
 public:
+	typedef enum { GAME_MODE_GAME, GAME_MODE_EDITOR, GAME_MODE_NONE } GameMode ;
+        
     GameViewer(QWidget *parent=NULL) ;
 
     void setGame(BoulderGame *g) ;
+    void setCurrentMode(GameMode m) ;
 
     // rederived methods from QGLViewer
 
@@ -29,6 +32,8 @@ public slots:
     void reDraw() ;
     
 private:
+    void pixelCoordinatesToGameCoordinate(int x,int y,int& i,int& j) const;
+
     BoulderGame *mGame ;
     GameDrawer mGameDrawer ;
 
@@ -38,4 +43,6 @@ private:
     float mOldMouseY;
 
     bool mMousePressed ;
+    GameMode mCurrentMode ;
+            
 };

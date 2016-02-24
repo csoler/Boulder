@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 
+#include <QKeyEvent>
 #include <QtGui/QMessageBox>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -14,20 +15,33 @@ using namespace std ;
 GameInterface::GameInterface()
 	:QMainWindow(NULL)
 {
+	setupUi(this) ;
+    
 	_current_game = NULL ;
+    
+    	if(gameViewer != NULL)
+		gameViewer->setCurrentMode(GameViewer::GAME_MODE_NONE) ;
 
     	//mSceneCenterPos = QPointF(0,0);
 	//mMousePressed = false ;
-    
-	setupUi(this) ;
 
 	connect(actionNew,SIGNAL(triggered()),this,SLOT(newGame())) ;
 	connect(actionSave,SIGNAL(triggered()),this,SLOT(saveGame())) ;
 	connect(actionLoad,SIGNAL(triggered()),this,SLOT(loadGame())) ;
+	connect(actionLevelEditor,SIGNAL(triggered()),this,SLOT(editGame())) ;
     
 	//connect(actionQuit,SIGNAL(triggered()),this,SLOT(quit())) ;
 	//connect(actionAbout,SIGNAL(triggered()),this,SLOT(about())) ;
     
+}
+
+void GameInterface::editGame() 
+{
+    if(_current_game != NULL)
+	    _current_game->stop();
+    
+    	if(gameViewer != NULL)
+    gameViewer->setCurrentMode(GameViewer::GAME_MODE_EDITOR) ;
 }
 
 void GameInterface::quit() const
@@ -110,7 +124,8 @@ void GameInterface::newGame()
 
     _current_game = new BoulderGame ;
     _current_game->start();
-
+    
+    gameViewer->setCurrentMode(GameViewer::GAME_MODE_GAME) ;
     gameViewer->setGame(_current_game) ;
 }
 void GameInterface::saveGame() const
@@ -133,6 +148,8 @@ void GameInterface::loadGame()
     _current_game->currentState().load("level.blv") ;
 
     gameViewer->setGame(_current_game) ;
+    gameViewer->setCurrentMode(GameViewer::GAME_MODE_GAME) ;
+    
     _current_game->start();
 }
 void GameInterface::about() const
@@ -140,6 +157,16 @@ void GameInterface::about() const
 	QMessageBox::information(NULL,QString("About Boulder"),
 		QString("Boulder implements the classical <i>Boulder Dash</i> game. <br/><br/>Programing by Cyril Soler.")) ;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

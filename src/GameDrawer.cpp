@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 #include <QPainter>
 #include <QColor>
@@ -16,6 +17,14 @@ GameDrawer::GameDrawer(int W,int H)
 {
 }
 
+int GameDrawer::windowCoordToGameCoordX(float x) 
+{ 
+    return (int)floor((x - mSceneCenterX) / SQUARE_SIZE_IN_PIXELS) ;
+}
+int GameDrawer::windowCoordToGameCoordY(float y) 
+{ 
+    return (int)floor((y - mSceneCenterY) / SQUARE_SIZE_IN_PIXELS) ;
+}
 float GameDrawer::gameCoordToWindowCoordX(int i) 
 { 
     return SQUARE_SIZE_IN_PIXELS * i + mSceneCenterX;
