@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include <QKeyEvent>
+#include <QFileDialog>
 #include <QtGui/QMessageBox>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -133,7 +134,12 @@ void GameInterface::saveGame() const
 	if(_current_game == NULL)
         	return ;
 
-    	_current_game->currentState().save("level.blv") ;
+    	QString name = QFileDialog::getSaveFileName(NULL,"Save your level","Choose a file to save to","Levels (*.blv)") ;
+        
+        if(name.isNull())
+            return ;
+        
+    	_current_game->currentState().save(name.toStdString()) ;
 }
 
 void GameInterface::loadGame() 

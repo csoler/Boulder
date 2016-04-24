@@ -15,7 +15,8 @@ class Level
 							Stone   = 0x02,
 							Earth   = 0x03,
 							Player  = 0x04,
-							Exit    = 0x05
+							Exit    = 0x05,
+							Diamond = 0x06 
 		} ObjectId;
 
         	typedef enum {

@@ -43,26 +43,29 @@ void BoulderGame::timerEvent()
     for(int i=0;i<mLevelState.sizeX();++i)
 	    for(int j=mLevelState.sizeY()-1;j>=0;--j)
 	    {
-		    if(mLevelState(i,j) == Level::Stone && j+1<mLevelState.sizeY() && mLevelState(i,j+1) == Level::Void)
+		    Level::ObjectId vij = mLevelState(i,j);
+		    Level::ObjectId vijp1 = mLevelState(i,std::min(uint32_t(j+1), mLevelState.sizeY()-1));
+
+		    if( (vij == Level::Stone || vij == Level::Diamond) && j+1<mLevelState.sizeY() && vijp1 == Level::Void)
 		    {
-			    mLevelState(i,j+1) = Level::Stone ;
+			    mLevelState(i,j+1) = vij ;
 			    mLevelState(i,j) = Level::Void ;
 
 			    should_redraw = true;
 		    }
-                    
-		    if(mLevelState(i,j) == Level::Stone && j+1<mLevelState.sizeY() && i+1<mLevelState.sizeX() && mLevelState(i,j+1) == Level::Stone && mLevelState(i+1,j) == Level::Void && mLevelState(i+1,j+1) == Level::Void)
-	    		{
-                		mLevelState(i+1,j) = Level::Stone ;
-			    	mLevelState(i,j) = Level::Void ;
-                    		i++ ;
-	    		}
-            
-		    if(mLevelState(i,j) == Level::Stone && j+1<mLevelState.sizeY() && i>1 && mLevelState(i,j+1) == Level::Stone && mLevelState(i-1,j) == Level::Void && mLevelState(i-1,j+1) == Level::Void)
-	    		{
-                		mLevelState(i-1,j) = Level::Stone ;
-			    	mLevelState(i,j) = Level::Void ;
-	    		}
+
+		    if( (vij == Level::Stone || vij == Level::Diamond) && j+1<mLevelState.sizeY() && i+1<mLevelState.sizeX() && (vijp1 == Level::Stone || vijp1 == Level::Diamond) && mLevelState(i+1,j) == Level::Void && mLevelState(i+1,j+1) == Level::Void)
+		    {
+			    mLevelState(i+1,j) = vij;
+			    mLevelState(i,j) = Level::Void ;
+			    i++ ;
+		    }
+
+		    if( (vij == Level::Stone || vij == Level::Diamond) && j+1<mLevelState.sizeY() && i>1 && (vijp1 == Level::Stone || vijp1 == Level::Diamond) && mLevelState(i-1,j) == Level::Void && mLevelState(i-1,j+1) == Level::Void)
+		    {
+			    mLevelState(i-1,j) = vij;
+			    mLevelState(i,j) = Level::Void ;
+		    }
 	    }
 
     if(should_redraw)
@@ -71,11 +74,11 @@ void BoulderGame::timerEvent()
 	    emit changed() ;
     }
     mtx.unlock() ;
-    
+
     if(mLevelState.finished())
     {
-        QMessageBox::information(NULL,QString("Game is terminated"),QString("C'est gagne!")) ;
-	mTimer->stop() ;
+	    QMessageBox::information(NULL,QString("Game is terminated"),QString("C'est gagne!")) ;
+	    mTimer->stop() ;
     }
 }
 

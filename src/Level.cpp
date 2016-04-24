@@ -161,6 +161,9 @@ void Level::initDefault()
 	for(int i=0;i<100;++i)
 		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Stone ;
     
+	for(int i=0;i<50;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Diamond ;
+    
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;
         
