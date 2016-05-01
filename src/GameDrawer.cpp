@@ -64,6 +64,13 @@ void GameDrawer::update(const BoulderGame& game,int w,int h)
                     
                     painter.drawPixmap(mx,my,getGameSprite( game.currentState()(i,j), resolution )) ;
 	    }
+    
+    QFont font(painter.font()) ;
+    font.setPointSize(40) ;
+    
+    painter.setPen(QRgb(0xffffffff)) ;
+    painter.setFont(font) ;
+    painter.drawText(50,150,QString::number(level.collectedDiamonds())) ;
 }
 
 QPixmap GameDrawer::pixmap() const

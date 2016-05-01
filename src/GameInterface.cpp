@@ -144,15 +144,23 @@ void GameInterface::saveGame() const
 
 void GameInterface::loadGame() 
 {
+    	QString name = QFileDialog::getOpenFileName(NULL,"Load a level","Choose a file to save to","Levels (*.blv)") ;
+        
+        if(name.isNull())
+            return ;
+        
+
+    BoulderGame *tmp_game = new BoulderGame ;
+    tmp_game->currentState().load(name.toStdString()) ;
+    
     if(_current_game != NULL)
     {
 	    _current_game->stop();
 	    delete _current_game ;
     }
     
-    _current_game = new BoulderGame ;
-    _current_game->currentState().load("level.blv") ;
-
+    _current_game = tmp_game ;
+    
     gameViewer->setGame(_current_game) ;
     gameViewer->setCurrentMode(GameViewer::GAME_MODE_GAME) ;
     

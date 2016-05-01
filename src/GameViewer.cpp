@@ -54,9 +54,6 @@ void GameViewer::pixelCoordinatesToGameCoordinate(int x,int y,int& i,int& j) con
 
 void GameViewer::setGame(BoulderGame *g)
 {
-    if(mGame != NULL)
-        delete mGame ;
-    
     mGame = g ;
     
     //setSceneRadius(2*std::max(mGame->currentState().sizeX(),mGame->currentState().sizeY())) ;

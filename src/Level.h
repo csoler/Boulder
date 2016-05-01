@@ -40,8 +40,10 @@ class Level
             
             	void save(const std::string& fname) const ;
             	void load(const std::string& fname) ;
-	private:
                 
+                uint32_t collectedDiamonds() const { return mCollectedDiamonds ; }
+                
+	private:
 		uint32_t mSizeX ;
 		uint32_t mSizeY ;
 
@@ -50,4 +52,5 @@ class Level
             
 		std::vector<ObjectId> mContent ;
         	bool mFinished ;
+            	uint32_t mCollectedDiamonds ;
 };

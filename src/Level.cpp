@@ -9,6 +9,7 @@ Level::Level()
 {
 	initDefault() ;
     	mFinished = false ;
+        mCollectedDiamonds = 0 ;
 }
 Level::Level(const std::string& fname)
 {
@@ -56,7 +57,17 @@ void Level::movePlayer(MoveDirection d)
 	    std::cerr << "(EE) untreated case!" << std::endl;
     }
     
-    if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void || operator()(new_player_x,new_player_y) == Level::Exit)
+    if(operator()(new_player_x,new_player_y) == Level::Diamond)
+    {
+	    mPlayerX = new_player_x ;
+	    mPlayerY = new_player_y ;
+
+	    operator()(old_player_x,old_player_y) = Level::Void ;
+	    operator()(mPlayerX    ,mPlayerY) = Level::Player ;
+        
+            mCollectedDiamonds++ ;
+    }
+    else  if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void || operator()(new_player_x,new_player_y) == Level::Exit)
     {
         if(operator()(new_player_x,new_player_y) == Level::Exit)
             mFinished = true ;
@@ -67,8 +78,7 @@ void Level::movePlayer(MoveDirection d)
 	    operator()(old_player_x,old_player_y) = Level::Void ;
 	    operator()(mPlayerX,mPlayerY) = Level::Player ;
             
-    }
-    if(operator()(new_player_x,new_player_y) == Level::Stone 
+    } else if(operator()(new_player_x,new_player_y) == Level::Stone 
             && d == Right 
             && new_player_x + 1 < mSizeX-1
             && operator()(new_player_x + 1,new_player_y) == Level::Void)
@@ -80,7 +90,7 @@ void Level::movePlayer(MoveDirection d)
         mPlayerX = new_player_x ;
         mPlayerY = new_player_y ;
     }
-    if(operator()(new_player_x,new_player_y) == Level::Stone 
+    else if(operator()(new_player_x,new_player_y) == Level::Stone 
             && d == Left 
             && new_player_x - 1 > 0
             && operator()(new_player_x - 1,new_player_y) == Level::Void)
@@ -139,6 +149,7 @@ void Level::save(const std::string &fname) const
 
 void Level::initDefault()
 {
+        mCollectedDiamonds = 0 ;
 	mSizeX = 50 ;
 	mSizeY = 30 ;
 
