@@ -4,6 +4,7 @@
         <file>images/stone.png</file>
         <file>images/ground.png</file>
         <file>images/door.png</file>
+        <file>images/opendoor.png</file>
         <file>images/player.png</file>
         <file>images/diamond.png</file>
     </qresource>

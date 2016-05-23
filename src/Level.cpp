@@ -10,6 +10,9 @@ Level::Level()
 	initDefault() ;
     	mFinished = false ;
         mCollectedDiamonds = 0 ;
+	mAllDiamondsCollected = false;
+            
+        mDiamondsToCollect = 40;
 }
 Level::Level(const std::string& fname)
 {
@@ -66,6 +69,12 @@ void Level::movePlayer(MoveDirection d)
 	    operator()(mPlayerX    ,mPlayerY) = Level::Player ;
         
             mCollectedDiamonds++ ;
+            
+            if(mCollectedDiamonds >= mDiamondsToCollect)
+            {
+                mAllDiamondsCollected = true ;
+		operator()(mExitX,mExitY) = Level::Exit ;
+            }
     }
     else  if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void || operator()(new_player_x,new_player_y) == Level::Exit)
     {
@@ -116,9 +125,9 @@ void Level::load(const std::string &fname)
    
    mContent.resize(mSizeX*mSizeY,Level::Earth) ;
    
-   for(int i=0;i<mSizeY;++i)
+   for(uint32_t i=0;i<mSizeY;++i)
    {
-       for(int j=0;j<mSizeX;++j)
+       for(uint32_t j=0;j<mSizeX;++j)
        {
            unsigned char s ;
            is >> s ;
@@ -178,8 +187,11 @@ void Level::initDefault()
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;
         
+        mExitX = mSizeX-3 ;
+        mExitY = mSizeY-3 ;
+        
     	operator()(mPlayerX,mPlayerY) = Level::Player ;
-        operator()(mSizeX-3,mSizeY-3) = Level::Exit ;
+        operator()(mExitX,mExitY) = Level::ClosedExit ;
 }
 
 

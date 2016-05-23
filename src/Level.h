@@ -15,8 +15,9 @@ class Level
 							Stone   = 0x02,
 							Earth   = 0x03,
 							Player  = 0x04,
-							Exit    = 0x05,
-							Diamond = 0x06 
+							ClosedExit = 0x05,
+							Diamond = 0x06,
+							Exit    = 0x07
 		} ObjectId;
 
         	typedef enum {
@@ -29,6 +30,7 @@ class Level
 		void initDefault();
 
         	bool finished() const { return mFinished ; }
+        	bool allDiamondCollected() const { return mAllDiamondsCollected ; }
             
 		ObjectId operator()(uint32_t i,uint32_t j) const ;
 		ObjectId& operator()(uint32_t i,uint32_t j) ;
@@ -47,10 +49,16 @@ class Level
 		uint32_t mSizeX ;
 		uint32_t mSizeY ;
 
+		uint32_t mExitX ;
+		uint32_t mExitY ;
+        
         	uint32_t mPlayerX ;
         	uint32_t mPlayerY ;
             
 		std::vector<ObjectId> mContent ;
         	bool mFinished ;
+        	bool mAllDiamondsCollected ;
+            
+            	uint32_t mDiamondsToCollect ;
             	uint32_t mCollectedDiamonds ;
 };

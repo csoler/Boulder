@@ -82,12 +82,13 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
 {
     switch(oid)
     {
-    case Level::Wall:  return QPixmap(":/images/wall.png");
-    case Level::Stone: return QPixmap(":/images/stone.png");
-    case Level::Earth: return QPixmap(":/images/ground.png");
-    case Level::Exit:  return QPixmap(":/images/door.png");
-    case Level::Player:return QPixmap(":/images/player.png");
-    case Level::Diamond:return QPixmap(":/images/diamond.png");
+    case Level::Wall:        return QPixmap(":/images/wall.png");
+    case Level::Stone:       return QPixmap(":/images/stone.png");
+    case Level::Earth:       return QPixmap(":/images/ground.png");
+    case Level::Exit:        return QPixmap(":/images/opendoor.png");
+    case Level::ClosedExit:  return QPixmap(":/images/door.png");
+    case Level::Player:      return QPixmap(":/images/player.png");
+    case Level::Diamond:     return QPixmap(":/images/diamond.png");
             
     case Level::Void:  {
 	    QColor col = QColor::fromHsv(0,255,0) ;
