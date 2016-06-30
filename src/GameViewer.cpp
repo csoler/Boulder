@@ -125,12 +125,17 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    redraw = true ;
 	    break ;
 
-    case Qt::Key_D: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+    case Qt::Key_D: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
 		            mGame->currentState()(i,j) = Level::Diamond ;
 	    redraw = true ;
 	    break ;
         
-    case Qt::Key_V: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+    case Qt::Key_B: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
+		            mGame->currentState()(i,j) = Level::Bomb ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_V: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
 		            mGame->currentState()(i,j) = Level::Void ;
 	    redraw = true ;
 	    break ;
@@ -140,13 +145,13 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    redraw = true ;
 	    break ;
 
-    case Qt::Key_S: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+    case Qt::Key_S: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
 
         mGame->currentState()(i,j) = Level::Stone ;
 	    redraw = true ;
 	    break ;
 
-    case Qt::Key_E: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+    case Qt::Key_E: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
 
         mGame->currentState()(i,j) = Level::Earth ;
 	    redraw = true ;

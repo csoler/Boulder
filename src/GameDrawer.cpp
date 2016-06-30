@@ -89,6 +89,7 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
     case Level::ClosedExit:  return QPixmap(":/images/door.png");
     case Level::Player:      return QPixmap(":/images/player.png");
     case Level::Diamond:     return QPixmap(":/images/diamond.png");
+    case Level::Bomb:        return QPixmap(":/images/bomb.png");
             
     case Level::Void:  {
 	    QColor col = QColor::fromHsv(0,255,0) ;
