@@ -125,6 +125,16 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    redraw = true ;
 	    break ;
 
+    case Qt::Key_D: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+		            mGame->currentState()(i,j) = Level::Diamond ;
+	    redraw = true ;
+	    break ;
+        
+    case Qt::Key_V: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+		            mGame->currentState()(i,j) = Level::Void ;
+	    redraw = true ;
+	    break ;
+
     case Qt::Key_W: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
 		            mGame->currentState()(i,j) = Level::Wall ;
 	    redraw = true ;
