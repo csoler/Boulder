@@ -184,6 +184,9 @@ void Level::initDefault()
 	for(int i=0;i<50;++i)
 		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Diamond ;
     
+	for(int i=0;i<5;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Bomb ;
+
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;
         
