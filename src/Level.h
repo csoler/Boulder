@@ -10,15 +10,19 @@ class Level
 		Level(const std::string& fname);
 
 		typedef enum {
-							Void       = 0x00,
-							Wall       = 0x01,
-							Stone      = 0x02,
-							Earth      = 0x03,
-							Player     = 0x04,
-							ClosedExit = 0x05,
-							Diamond    = 0x06,
-							Exit       = 0x07,
-							Bomb       = 0x08
+							Void         = 0x00,
+							Wall         = 0x01,
+							Stone        = 0x02,
+							Earth        = 0x03,
+							Player       = 0x04,
+							ClosedExit   = 0x05,
+							Diamond      = 0x06,
+							Exit         = 0x07,
+							Bomb         = 0x08,
+							Explosion_01 = 0x09,
+							Explosion_02 = 0x0a,
+							Explosion_03 = 0x0b,
+							Explosion_04 = 0x0c
 		} ObjectId;
 
         	typedef enum {

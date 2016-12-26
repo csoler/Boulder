@@ -82,15 +82,19 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
 {
     switch(oid)
     {
-    case Level::Wall:        return QPixmap(":/images/wall.png");
-    case Level::Stone:       return QPixmap(":/images/stone.png");
-    case Level::Earth:       return QPixmap(":/images/ground.png");
-    case Level::Exit:        return QPixmap(":/images/opendoor.png");
-    case Level::ClosedExit:  return QPixmap(":/images/door.png");
-    case Level::Player:      return QPixmap(":/images/player.png");
-    case Level::Diamond:     return QPixmap(":/images/diamond.png");
-    case Level::Bomb:        return QPixmap(":/images/bomb.png");
-            
+    case Level::Wall:           return QPixmap(":/images/wall.png");
+    case Level::Stone:          return QPixmap(":/images/stone.png");
+    case Level::Earth:          return QPixmap(":/images/ground.png");
+    case Level::Exit:           return QPixmap(":/images/opendoor.png");
+    case Level::ClosedExit:     return QPixmap(":/images/door.png");
+    case Level::Player:         return QPixmap(":/images/player.png");
+    case Level::Diamond:        return QPixmap(":/images/diamond.png");
+    case Level::Bomb:           return QPixmap(":/images/bomb.png");
+    case Level::Explosion_01:   return QPixmap(":/images/explosion_01.png");
+    case Level::Explosion_02:   return QPixmap(":/images/explosion_02.png");
+    case Level::Explosion_03:   return QPixmap(":/images/explosion_03.png");
+    case Level::Explosion_04:   return QPixmap(":/images/explosion_04.png");
+
     case Level::Void:  {
 	    QColor col = QColor::fromHsv(0,255,0) ;
 	    QPixmap pix(128,128) ;

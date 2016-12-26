@@ -8,5 +8,9 @@
         <file>images/opendoor.png</file>
         <file>images/player.png</file>
         <file>images/diamond.png</file>
+        <file>images/explosion_01.png</file>
+        <file>images/explosion_02.png</file>
+        <file>images/explosion_03.png</file>
+        <file>images/explosion_04.png</file>
     </qresource>
 </RCC>
