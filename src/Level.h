@@ -22,7 +22,11 @@ class Level
 							Explosion_01 = 0x09,
 							Explosion_02 = 0x0a,
 							Explosion_03 = 0x0b,
-							Explosion_04 = 0x0c
+							Explosion_04 = 0x0c,
+							Bug_top      = 0x0d,
+							Bug_right    = 0x0e,
+							Bug_bottom   = 0x0f,
+							Bug_left     = 0x10
 		} ObjectId;
 
         	typedef enum {

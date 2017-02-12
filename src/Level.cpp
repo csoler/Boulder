@@ -158,7 +158,7 @@ void Level::save(const std::string &fname) const
 
 void Level::initDefault()
 {
-        mCollectedDiamonds = 0 ;
+	mCollectedDiamonds = 0 ;
 	mSizeX = 50 ;
 	mSizeY = 30 ;
 
@@ -186,6 +186,9 @@ void Level::initDefault()
     
 	for(int i=0;i<5;++i)
 		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Bomb ;
+
+	for(int i=0;i<6;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Bug_left ;
 
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;

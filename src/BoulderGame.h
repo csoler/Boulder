@@ -27,7 +27,7 @@ protected slots:
         	void timerEvent() ;
 
 	private:
-			void explode(int i, int j);
+			void explode(Level &level, int i, int j);
 
 		Level mLevelState ;
         
