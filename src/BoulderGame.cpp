@@ -39,14 +39,14 @@ void BoulderGame::explode(Level& level, int i, int j)
 {
     for(int k=-1;k<2;++k)
         for(int l=-1;l<2;++l)
-            if( i+k > 0 && i+k < mLevelState.sizeX()-1 && j+l > 0 && j+l < mLevelState.sizeY()-1)
+            if( i+k > 0 && i+k < level.sizeX()-1 && j+l > 0 && j+l < level.sizeY()-1 && level(i+k,j+l)!=Level::Exit && level(i+k,j+l)!=Level::ClosedExit)
 				level(i+k,j+l) = Level::Explosion_01 ;
 }
 
 void BoulderGame::timerEvent()
 {
     mtx.lock() ;
-    bool should_redraw = false ;
+    bool should_redraw = true ;
 
     Level new_state(mLevelState) ;
 
@@ -56,6 +56,8 @@ void BoulderGame::timerEvent()
 		    Level::ObjectId vij = mLevelState(i,j);
 		    Level::ObjectId vijp1 = mLevelState(i,std::min(uint32_t(j+1), mLevelState.sizeY()-1));
 
+            // Chute des pierres, des diamants et des bombes
+
 		    if( (vij == Level::Stone || vij == Level::Diamond || vij == Level::Bomb) && j+1<mLevelState.sizeY() && vijp1 == Level::Void)
 		    {
 			    new_state(i,j+1) = vij ;
@@ -64,8 +66,15 @@ void BoulderGame::timerEvent()
                 if(mLevelState(i,j+2) == Level::Bomb)
                     explode(new_state,i,j+2) ;
 
+                if(mLevelState(i,j+2) == Level::Bug_bottom) { explode(new_state,i,j+2) ; mLevelState(i,j+2) = Level::Void ; }
+                if(mLevelState(i,j+2) == Level::Bug_left)   { explode(new_state,i,j+2) ; mLevelState(i,j+2) = Level::Void ; }
+                if(mLevelState(i,j+2) == Level::Bug_top)    { explode(new_state,i,j+2) ; mLevelState(i,j+2) = Level::Void ; }
+                if(mLevelState(i,j+2) == Level::Bug_right)  { explode(new_state,i,j+2) ; mLevelState(i,j+2) = Level::Void ; }
+
 			    should_redraw = true;
 		    }
+
+            // Chute de pierre a droite
 
 		    if( (vij == Level::Stone || vij == Level::Diamond) && j+1<mLevelState.sizeY() && i+1<mLevelState.sizeX() && (vijp1 == Level::Stone || vijp1 == Level::Diamond) && mLevelState(i+1,j) == Level::Void && mLevelState(i+1,j+1) == Level::Void)
 		    {
@@ -74,11 +83,15 @@ void BoulderGame::timerEvent()
 			    i++ ;
 		    }
 
+            // Chute de pierre a gauche
+
 		    if( (vij == Level::Stone || vij == Level::Diamond) && j+1<mLevelState.sizeY() && i>1 && (vijp1 == Level::Stone || vijp1 == Level::Diamond) && mLevelState(i-1,j) == Level::Void && mLevelState(i-1,j+1) == Level::Void)
 		    {
 			    new_state(i-1,j) = vij;
 			    new_state(i,j) = Level::Void ;
 		    }
+
+            // Explosion en cours
 
             if(vij == Level::Explosion_04) new_state(i,j) = Level::Void ;
             if(vij == Level::Explosion_03) new_state(i,j) = Level::Explosion_04 ;

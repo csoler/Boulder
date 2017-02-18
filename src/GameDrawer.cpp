@@ -94,6 +94,10 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
     case Level::Explosion_02:   return QPixmap(":/images/explosion_02.png");
     case Level::Explosion_03:   return QPixmap(":/images/explosion_03.png");
     case Level::Explosion_04:   return QPixmap(":/images/explosion_04.png");
+    case Level::Bug_top:        return QPixmap(":/images/bug_top.png");
+    case Level::Bug_left:       return QPixmap(":/images/bug_left.png");
+    case Level::Bug_bottom:     return QPixmap(":/images/bug_bottom.png");
+    case Level::Bug_right:      return QPixmap(":/images/bug_right.png");
 
     case Level::Void:  {
 	    QColor col = QColor::fromHsv(0,255,0) ;

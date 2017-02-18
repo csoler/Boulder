@@ -110,7 +110,31 @@ void Level::movePlayer(MoveDirection d)
         
         mPlayerX = new_player_x ;
         mPlayerY = new_player_y ;
+    } else if(operator()(new_player_x,new_player_y) == Level::Bomb
+            && d == Right
+            && new_player_x + 1 < mSizeX-1
+            && operator()(new_player_x + 1,new_player_y) == Level::Void)
+    {
+        operator()(new_player_x + 1,new_player_y) = Level::Bomb ;
+        operator()(new_player_x    ,new_player_y) = Level::Player ;
+        operator()(mPlayerX        ,mPlayerY    ) = Level::Void ;
+
+        mPlayerX = new_player_x ;
+        mPlayerY = new_player_y ;
     }
+    else if(operator()(new_player_x,new_player_y) == Level::Bomb
+            && d == Left
+            && new_player_x - 1 > 0
+            && operator()(new_player_x - 1,new_player_y) == Level::Void)
+    {
+        operator()(new_player_x - 1,new_player_y) = Level::Bomb ;
+        operator()(new_player_x    ,new_player_y) = Level::Player ;
+        operator()(mPlayerX        ,mPlayerY    ) = Level::Void ;
+
+        mPlayerX = new_player_x ;
+        mPlayerY = new_player_y ;
+    }
+
 }
 void Level::load(const std::string &fname) 
 {
@@ -188,7 +212,7 @@ void Level::initDefault()
 		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Bomb ;
 
 	for(int i=0;i<6;++i)
-		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Bug_left ;
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::ObjectId((int)Level::Bug_top + (lrand48() & 0x3)) ;
 
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;
