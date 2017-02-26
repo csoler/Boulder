@@ -98,6 +98,7 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
     case Level::Bug_left:       return QPixmap(":/images/bug_left.png");
     case Level::Bug_bottom:     return QPixmap(":/images/bug_bottom.png");
     case Level::Bug_right:      return QPixmap(":/images/bug_right.png");
+    case Level::Moss:           return QPixmap(":/images/moss.png");
 
     case Level::Void:  {
 	    QColor col = QColor::fromHsv(0,255,0) ;

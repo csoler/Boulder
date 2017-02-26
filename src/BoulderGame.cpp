@@ -49,6 +49,7 @@ void BoulderGame::timerEvent()
     bool should_redraw = true ;
 
     Level new_state(mLevelState) ;
+    bool mousse_coincee = true ;
 
     for(int i=0;i<mLevelState.sizeX();++i)
 	    for(int j=0;j<mLevelState.sizeY();++j)
@@ -73,6 +74,16 @@ void BoulderGame::timerEvent()
 
 			    should_redraw = true;
 		    }
+
+            // Bete qui touche la mousse
+
+            if(vij == Level::Level::Bug_bottom || vij == Level::Level::Bug_top || vij == Level::Level::Bug_left || vij == Level::Level::Bug_right)
+                if(mLevelState(i-1,j)==Level::Moss || mLevelState(i  ,j-1)==Level::Moss || mLevelState(i  ,j+1)==Level::Moss || mLevelState(i+1,j  )==Level::Moss)
+                {
+                    explode(new_state,i,j) ;
+                    mLevelState(i,j) = Level::Void ;
+                    vij = Level::Void;
+                }
 
             // Chute de pierre a droite
 
@@ -161,7 +172,22 @@ void BoulderGame::timerEvent()
                 else
                     new_state(i,j) = Level::Bug_right ;
             }
-	    }
+
+            if(vij == Level::Earth || vij==Level::Void)
+                if(mLevelState(i-1,j)==Level::Moss || mLevelState(i  ,j-1)==Level::Moss || mLevelState(i  ,j+1)==Level::Moss || mLevelState(i+1,j  )==Level::Moss)
+                {
+                    mousse_coincee = false ;
+
+                    if(drand48() < 0.01)
+						new_state(i,j) = Level::Moss;
+                }
+		}
+
+    if(mousse_coincee)
+		for(int i=0;i<mLevelState.sizeX();++i)
+			for(int j=0;j<mLevelState.sizeY();++j)
+                if(new_state(i,j) == Level::Moss)
+					new_state(i,j) = Level::Diamond ;
 
     mLevelState = new_state ;
 

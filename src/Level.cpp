@@ -214,6 +214,9 @@ void Level::initDefault()
 	for(int i=0;i<6;++i)
 		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::ObjectId((int)Level::Bug_top + (lrand48() & 0x3)) ;
 
+	for(int i=0;i<6;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::ObjectId((int)Level::Moss) ;
+
     	mPlayerX = 4 ;
     	mPlayerY = 4 ;
         

@@ -26,7 +26,8 @@ class Level
 							Bug_top      = 0x0d,
 							Bug_right    = 0x0e,
 							Bug_bottom   = 0x0f,
-							Bug_left     = 0x10
+							Bug_left     = 0x10,
+            				Moss         = 0x11
 		} ObjectId;
 
         	typedef enum {
