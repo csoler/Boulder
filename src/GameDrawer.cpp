@@ -71,6 +71,15 @@ void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
     painter.setPen(QRgb(0xffffffff)) ;
     painter.setFont(font) ;
     painter.drawText(50,150,QString::number(level.collectedDiamonds())) ;
+
+    if(m == GAME_MODE_EDITOR)
+    {
+        QPen newPen(QColor::fromRgb(255,0,0), Qt::SolidLine);
+        newPen.setWidth(64);
+        painter.setPen(newPen);
+
+        painter.drawRect(mDrawBuffer.rect());
+    }
 }
 
 QPixmap GameDrawer::pixmap() const

@@ -69,7 +69,7 @@ void GameViewer::reDraw()
 {
 	if(mGame != NULL)
 	{
-		std::cerr << "redraw!" << std::endl;
+		//std::cerr << "redraw!" << std::endl;
 		mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
 		update();
 	}
@@ -94,10 +94,40 @@ void GameViewer::paintEvent(QPaintEvent *)
 void GameViewer::setCurrentMode(GameMode m)
 {
     mCurrentMode = m ;
+
+    if(mGame != NULL)
+		mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
+
+    update() ;
 }
     
 void GameViewer::keyPressEvent(QKeyEvent *e)
 {
+    switch(e->key())
+    {
+    case Qt::Key_Left:
+    case Qt::Key_Right:
+    case Qt::Key_Up:
+    case Qt::Key_Down:
+        if(mCurrentMode != GAME_MODE_GAME)
+            return ;
+
+        break ;
+
+    case Qt::Key_D:
+    case Qt::Key_B:
+    case Qt::Key_V:
+    case Qt::Key_W:
+    case Qt::Key_X:
+    case Qt::Key_S:
+    case Qt::Key_E:
+
+        if(mCurrentMode != GAME_MODE_EDITOR)
+            return ;
+
+        break ;
+    }
+
     int i = mGameDrawer.windowCoordToGameCoordX(mOldMouseX) ;
     int j = mGameDrawer.windowCoordToGameCoordY(height() -1 -mOldMouseY) ;
     

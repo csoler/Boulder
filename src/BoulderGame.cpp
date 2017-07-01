@@ -78,8 +78,11 @@ void BoulderGame::timerEvent()
             // Bete qui touche la mousse
 
             if(vij == Level::Level::Bug_bottom || vij == Level::Level::Bug_top || vij == Level::Level::Bug_left || vij == Level::Level::Bug_right)
-                if(mLevelState(i-1,j)==Level::Moss || mLevelState(i  ,j-1)==Level::Moss || mLevelState(i  ,j+1)==Level::Moss || mLevelState(i+1,j  )==Level::Moss)
-                {
+                if( (i>0 && mLevelState(i-1,j)==Level::Moss)
+                 || (j>0 && mLevelState(i  ,j-1)==Level::Moss)
+                 || (j+1 < mLevelState.sizeY() && mLevelState(i  ,j+1)==Level::Moss)
+                 || (i+1 < mLevelState.sizeX() && mLevelState(i+1,j  )==Level::Moss))
+				{
                     explode(new_state,i,j) ;
                     mLevelState(i,j) = Level::Void ;
                     vij = Level::Void;
@@ -174,7 +177,10 @@ void BoulderGame::timerEvent()
             }
 
             if(vij == Level::Earth || vij==Level::Void)
-                if(mLevelState(i-1,j)==Level::Moss || mLevelState(i  ,j-1)==Level::Moss || mLevelState(i  ,j+1)==Level::Moss || mLevelState(i+1,j  )==Level::Moss)
+                if( (i > 0 && mLevelState(i-1,j)==Level::Moss)
+                        || (j>0 && mLevelState(i  ,j-1)==Level::Moss)
+                        || (j+1 < mLevelState.sizeY() && mLevelState(i  ,j+1)==Level::Moss)
+                        || (i+1 < mLevelState.sizeX() && mLevelState(i+1,j  )==Level::Moss))
                 {
                     mousse_coincee = false ;
 
@@ -193,7 +199,7 @@ void BoulderGame::timerEvent()
 
     if(should_redraw)
     {
-	    std::cerr << "Emitting changed" << std::endl;
+	    //std::cerr << "Emitting changed" << std::endl;
 	    emit changed() ;
     }
     mtx.unlock() ;
