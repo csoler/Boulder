@@ -4,6 +4,7 @@
 #include <QPixmap>
 
 #include "Level.h"
+#include "GameDefs.h"
 
 class BoulderGame ;
 
@@ -12,7 +13,7 @@ class GameDrawer
 	public: 
 		GameDrawer(int W,int H);
 
-		virtual void update(const BoulderGame& game,int w,int h) ;
+		virtual void update(const BoulderGame& game, int w, int h, GameMode m) ;
 		virtual QPixmap pixmap() const ;
 
 	float gameCoordToWindowCoordX(int i)  ;

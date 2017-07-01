@@ -61,7 +61,7 @@ void GameViewer::setGame(BoulderGame *g)
     
     QObject::connect(mGame,SIGNAL(changed()),this,SLOT(reDraw())) ;
                      
-    mGameDrawer.update(*g,width(),height()) ;
+    mGameDrawer.update(*g,width(),height(),mCurrentMode) ;
     update() ;
 }
 
@@ -70,7 +70,7 @@ void GameViewer::reDraw()
 	if(mGame != NULL)
 	{
 		std::cerr << "redraw!" << std::endl;
-		mGameDrawer.update(*mGame,width(),height()) ;
+		mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
 		update();
 	}
  
@@ -78,7 +78,7 @@ void GameViewer::reDraw()
 void GameViewer::resizeEvent(QResizeEvent *e)
 {
     if(mGame != NULL)
-	    mGameDrawer.update(*mGame,width(),height()) ;
+	    mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
     
     update() ;
 }
@@ -98,11 +98,6 @@ void GameViewer::setCurrentMode(GameMode m)
     
 void GameViewer::keyPressEvent(QKeyEvent *e)
 {
-//    std::cerr << "In key press event x=" << mOldMouseX << ", y=" << mOldMouseY 
-//              << ", game coordinates: " << mGameDrawer.windowCoordToGameCoordX(mOldMouseX) 
-//              << " " << mGameDrawer.windowCoordToGameCoordY(height() - mOldMouseY) 
-//              << std::endl;
-    
     int i = mGameDrawer.windowCoordToGameCoordX(mOldMouseX) ;
     int j = mGameDrawer.windowCoordToGameCoordY(height() -1 -mOldMouseY) ;
     
@@ -140,8 +135,13 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    redraw = true ;
 	    break ;
 
-    case Qt::Key_W: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY()) 
+    case Qt::Key_W: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY())
 		            mGame->currentState()(i,j) = Level::Wall ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_X: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY())
+		            mGame->currentState()(i,j) = Level::MetalWall0 ;
 	    redraw = true ;
 	    break ;
 
@@ -164,7 +164,7 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
    
     if(redraw)
     {
-	mGameDrawer.update(*mGame,width(),height()) ;
+	mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
 	update() ;
     }
 }

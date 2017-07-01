@@ -2,6 +2,7 @@
 #include <QGLViewer/qglviewer.h>
 
 #include "Level.h"
+#include "GameDefs.h"
 #include "GameDrawer.h"
 
 class BoulderGame ;
@@ -11,12 +12,12 @@ class GameViewer: public QWidget
     Q_OBJECT
     
 public:
-	typedef enum { GAME_MODE_GAME, GAME_MODE_EDITOR, GAME_MODE_NONE } GameMode ;
         
     GameViewer(QWidget *parent=NULL) ;
 
     void setGame(BoulderGame *g) ;
     void setCurrentMode(GameMode m) ;
+    GameMode currentMode() { return mCurrentMode ; }
 
     // rederived methods from QGLViewer
 

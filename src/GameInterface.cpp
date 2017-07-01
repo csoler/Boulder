@@ -20,29 +20,40 @@ GameInterface::GameInterface()
     
 	_current_game = NULL ;
     
-    	if(gameViewer != NULL)
-		gameViewer->setCurrentMode(GameViewer::GAME_MODE_NONE) ;
+	if(gameViewer != NULL)
+		gameViewer->setCurrentMode(GAME_MODE_NONE) ;
 
-    	//mSceneCenterPos = QPointF(0,0);
+	//mSceneCenterPos = QPointF(0,0);
 	//mMousePressed = false ;
 
 	connect(actionNew,SIGNAL(triggered()),this,SLOT(newGame())) ;
 	connect(actionSave,SIGNAL(triggered()),this,SLOT(saveGame())) ;
 	connect(actionLoad,SIGNAL(triggered()),this,SLOT(loadGame())) ;
 	connect(actionLevelEditor,SIGNAL(triggered()),this,SLOT(editGame())) ;
-    
-	//connect(actionQuit,SIGNAL(triggered()),this,SLOT(quit())) ;
-	//connect(actionAbout,SIGNAL(triggered()),this,SLOT(about())) ;
-    
 }
 
 void GameInterface::editGame() 
 {
-    if(_current_game != NULL)
-	    _current_game->stop();
+    if(gameViewer->currentMode() == GAME_MODE_EDITOR)
+    {
+		if(_current_game != NULL)
+			_current_game->start();
+
+		if(gameViewer != NULL)
+			gameViewer->setCurrentMode(GAME_MODE_GAME) ;
+
+        actionLevelEditor->setText("Enter level editor") ;
+    }
+    else
+    {
+		if(_current_game != NULL)
+			_current_game->stop();
     
-    	if(gameViewer != NULL)
-    gameViewer->setCurrentMode(GameViewer::GAME_MODE_EDITOR) ;
+		if(gameViewer != NULL)
+			gameViewer->setCurrentMode(GAME_MODE_EDITOR) ;
+
+        actionLevelEditor->setText("Quit level editor") ;
+    }
 }
 
 void GameInterface::quit() const
@@ -126,7 +137,7 @@ void GameInterface::newGame()
     _current_game = new BoulderGame ;
     _current_game->start();
     
-    gameViewer->setCurrentMode(GameViewer::GAME_MODE_GAME) ;
+    gameViewer->setCurrentMode(GAME_MODE_GAME) ;
     gameViewer->setGame(_current_game) ;
 }
 void GameInterface::saveGame() const
@@ -162,7 +173,7 @@ void GameInterface::loadGame()
     _current_game = tmp_game ;
     
     gameViewer->setGame(_current_game) ;
-    gameViewer->setCurrentMode(GameViewer::GAME_MODE_GAME) ;
+    gameViewer->setCurrentMode(GAME_MODE_GAME) ;
     
     _current_game->start();
 }

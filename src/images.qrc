@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/metal_wall.png</file>
+        <file>images/metal_wall_s.png</file>
         <file>images/wall.png</file>
         <file>images/moss.png</file>
         <file>images/bomb.png</file>

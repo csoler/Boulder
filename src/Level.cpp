@@ -203,6 +203,12 @@ void Level::initDefault()
 		operator()(lrand48()%mSizeX,lrand48()%mSizeY) = Level::Wall ;
     
 	for(int i=0;i<100;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::MetalWall0 ;
+
+	for(int i=0;i<100;++i)
+		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::MetalWall1 ;
+
+	for(int i=0;i<100;++i)
 		operator()(1+(lrand48()%(mSizeX-2)),1+(lrand48()%(mSizeY-2))) = Level::Stone ;
     
 	for(int i=0;i<50;++i)

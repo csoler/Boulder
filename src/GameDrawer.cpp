@@ -35,7 +35,7 @@ float GameDrawer::gameCoordToWindowCoordY(int i)
 }
 
 
-void GameDrawer::update(const BoulderGame& game,int w,int h)
+void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
 {
     if(mDrawBuffer.width() != w || mDrawBuffer.height() != h)
         mDrawBuffer = QPixmap(w,h) ;
@@ -99,6 +99,8 @@ QPixmap GameDrawer::getImageForObjectId(const Level::ObjectId& oid)
     case Level::Bug_bottom:     return QPixmap(":/images/bug_bottom.png");
     case Level::Bug_right:      return QPixmap(":/images/bug_right.png");
     case Level::Moss:           return QPixmap(":/images/moss.png");
+    case Level::MetalWall0:     return QPixmap(":/images/metal_wall.png");
+    case Level::MetalWall1:     return QPixmap(":/images/metal_wall_s.png");
 
     case Level::Void:  {
 	    QColor col = QColor::fromHsv(0,255,0) ;
