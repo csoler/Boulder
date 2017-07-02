@@ -145,18 +145,28 @@ void Level::load(const std::string &fname)
    is >> mPlayerX ;
    is >> mPlayerY ;
 
-   std::cerr << "Loading game of size " << mSizeX << " x " << mSizeY << std::endl;
+   std::cerr << "Loading game of size " << mSizeX << " x " << mSizeY << ", placer position: " << mPlayerX << ", " << mPlayerY << std::endl;
    
+   is >> std::noskipws ;
+   char s ;
+   is >> s ;
    mContent.resize(mSizeX*mSizeY,Level::Earth) ;
    
    for(uint32_t i=0;i<mSizeY;++i)
    {
+	   unsigned char s ;
+
        for(uint32_t j=0;j<mSizeX;++j)
        {
-           unsigned char s ;
            is >> s ;
            operator()(j,i) = Level::ObjectId(s - ' ');
+
+	   std::cerr << "\"" << s << "\"" << std::endl;
        }
+       is >> s ;
+	   std::cerr << "\"" << s << "\"" << std::endl;
+
+       assert(s == '\n');
        
        //unsigned char s ;
        //is >> s ;

@@ -187,6 +187,24 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    redraw = true ;
 	    break ;
 
+    case Qt::Key_I: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1)
+
+            switch(mGame->currentState()(i,j))
+            {
+            case Level::Bug_top: mGame->currentState()(i,j) = Level::Bug_right;
+                				break ;
+            case Level::Bug_right: mGame->currentState()(i,j) = Level::Bug_bottom;
+                				break ;
+            case Level::Bug_bottom: mGame->currentState()(i,j) = Level::Bug_left;
+                				break ;
+            default:
+            case Level::Bug_left: mGame->currentState()(i,j) = Level::Bug_top;
+                				break ;
+            }
+
+	    redraw = true ;
+	    break ;
+
     default:
 	    e->ignore() ;
     }
