@@ -8,11 +8,13 @@
 Level::Level()
 {
 	initDefault() ;
-    	mFinished = false ;
-        mCollectedDiamonds = 0 ;
+
+	mFinished = false ;
+	mDead = false ;
+	mCollectedDiamonds = 0 ;
 	mAllDiamondsCollected = false;
-            
-        mDiamondsToCollect = 40;
+
+	mDiamondsToCollect = 40;
 }
 Level::Level(const std::string& fname)
 {

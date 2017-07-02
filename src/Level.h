@@ -43,6 +43,7 @@ class Level
 		void initDefault();
 
         	bool finished() const { return mFinished ; }
+        	bool dead() const { return mDead ; }
         	bool allDiamondCollected() const { return mAllDiamondsCollected ; }
             
 		ObjectId operator()(uint32_t i,uint32_t j) const ;
@@ -53,6 +54,9 @@ class Level
         	uint32_t sizeX() const { return mSizeX ; }
         	uint32_t sizeY() const { return mSizeY ; }
             
+        	uint32_t playerX() const { return mPlayerX ; }
+        	uint32_t playerY() const { return mPlayerY ; }
+
             	void save(const std::string& fname) const ;
             	void load(const std::string& fname) ;
                 
@@ -70,6 +74,7 @@ class Level
             
 		std::vector<ObjectId> mContent ;
         	bool mFinished ;
+        	bool mDead ;
         	bool mAllDiamondsCollected ;
             
             	uint32_t mDiamondsToCollect ;

@@ -28,6 +28,7 @@ protected slots:
 
 	private:
 			void explode(Level &level, int i, int j);
+			bool test_bestiole(const Level& L,int x,int y) const;
 
 		Level mLevelState ;
         

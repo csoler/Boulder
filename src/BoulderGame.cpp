@@ -43,6 +43,16 @@ void BoulderGame::explode(Level& level, int i, int j)
 				level(i+k,j+l) = Level::Explosion_01 ;
 }
 
+bool BoulderGame::test_bestiole(const Level& L,int x,int y) const
+{
+    if(x < 0 && x >= L.sizeX())
+        return false ;
+
+    Level::ObjectId i = L(x,y) ;
+
+    return (i == Level::Bug_top || i == Level::Bug_bottom || i == Level::Bug_left || i == Level::Bug_right) ;
+}
+
 void BoulderGame::timerEvent()
 {
     mtx.lock() ;
@@ -128,6 +138,8 @@ void BoulderGame::timerEvent()
                     new_state(i,j) = Level::Bug_top ;
             }
 
+            // Deplacement des bestioles
+
             if(vij == Level::Bug_bottom)
             {
                 if(new_state(i+1,j  ) == Level::Void)
@@ -194,6 +206,12 @@ void BoulderGame::timerEvent()
 			for(int j=0;j<mLevelState.sizeY();++j)
                 if(new_state(i,j) == Level::Moss)
 					new_state(i,j) = Level::Diamond ;
+
+    int x = new_state.playerX() ;
+    int y = new_state.playerY() ;
+
+    if(test_bestiole(new_state,x+1,y) || test_bestiole(new_state,x-1,y) || test_bestiole(new_state,x,y+1) || test_bestiole(new_state,x,y-1))
+		explode(new_state,x,y);
 
     mLevelState = new_state ;
 
