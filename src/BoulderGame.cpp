@@ -114,12 +114,12 @@ void BoulderGame::timerEvent()
 
             if(vij == Level::Bug_left)
             {
-                if(mLevelState(i  ,j+1) == Level::Void)
+                if(new_state(i  ,j+1) == Level::Void)
                 {
                     new_state(i  ,j+1) = Level::Bug_bottom ;
                     new_state(i  ,j) = Level::Void ;
                 }
-                else if(mLevelState(i-1,j) == Level::Void)
+                else if(new_state(i-1,j) == Level::Void)
                 {
                     new_state(i-1,j) = Level::Bug_left ;
                     new_state(i  ,j) = Level::Void ;
@@ -130,12 +130,12 @@ void BoulderGame::timerEvent()
 
             if(vij == Level::Bug_bottom)
             {
-                if(mLevelState(i+1,j  ) == Level::Void)
+                if(new_state(i+1,j  ) == Level::Void)
                 {
                     new_state(i+1,j  ) = Level::Bug_right ;
                     new_state(i  ,j) = Level::Void ;
                 }
-                else if(mLevelState(i  ,j+1) == Level::Void)
+                else if(new_state(i  ,j+1) == Level::Void)
                 {
                     new_state(i  ,j+1) = Level::Bug_bottom ;
                     new_state(i  ,j) = Level::Void ;
@@ -146,12 +146,12 @@ void BoulderGame::timerEvent()
 
 			if(vij == Level::Bug_right)
             {
-                if(mLevelState(i  ,j-1) == Level::Void)
+                if(new_state(i  ,j-1) == Level::Void)
                 {
                     new_state(i  ,j-1) = Level::Bug_top ;
                     new_state(i  ,j) = Level::Void ;
                 }
-                else if(mLevelState(i+1,j  ) == Level::Void)
+                else if(new_state(i+1,j  ) == Level::Void)
                 {
                     new_state(i+1,j  ) = Level::Bug_right ;
                     new_state(i  ,j) = Level::Void ;
@@ -162,12 +162,12 @@ void BoulderGame::timerEvent()
 
 			if(vij == Level::Bug_top)
             {
-                if(mLevelState(i-1,j  ) == Level::Void)
+                if(new_state(i-1,j  ) == Level::Void)
                 {
                     new_state(i-1,j) = Level::Bug_left ;
                     new_state(i  ,j) = Level::Void ;
                 }
-                else if(mLevelState(i  ,j-1) == Level::Void)
+                else if(new_state(i  ,j-1) == Level::Void)
                 {
                     new_state(i  ,j-1) = Level::Bug_top ;
                     new_state(i  ,j) = Level::Void ;

@@ -173,9 +173,10 @@ void GameInterface::loadGame()
     _current_game = tmp_game ;
     
     gameViewer->setGame(_current_game) ;
-    gameViewer->setCurrentMode(GAME_MODE_GAME) ;
+    //gameViewer->setCurrentMode(GAME_MODE_GAME) ;
     
-    _current_game->start();
+    if(gameViewer->currentMode() == GAME_MODE_GAME)
+		_current_game->start();
 }
 void GameInterface::about() const
 {
