@@ -160,7 +160,15 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    redraw = true ;
 	    break ;
         
-    case Qt::Key_B: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
+    case Qt::Key_M: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1)
+						if(e->modifiers() & Qt::ShiftModifier)
+							mGame->currentState().fill(Level::Moss);
+				        else
+		            		mGame->currentState()(i,j) = Level::Moss ;
+	    redraw = true ;
+	    break ;
+
+    case Qt::Key_B: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1)
 						if(e->modifiers() & Qt::ShiftModifier)
 							mGame->currentState().fill(Level::Bomb);
 				        else
