@@ -9,8 +9,7 @@ Level::Level()
 {
 	initDefault() ;
 
-	mFinished = false ;
-	mDead = false ;
+	mPlayerState = PLAYER_PLAY;
 	mCollectedDiamonds = 0 ;
 	mAllDiamondsCollected = false;
 
@@ -19,7 +18,7 @@ Level::Level()
 Level::Level(const std::string& fname)
 {
 	load(fname) ;
-    	mFinished = false ;
+	mPlayerState = PLAYER_PLAY;
 }
 
 Level::ObjectId& Level::operator()(uint32_t i,uint32_t j) 
@@ -39,7 +38,7 @@ Level::ObjectId Level::operator()(uint32_t i,uint32_t j) const
 
 void Level::movePlayer(MoveDirection d)
 {
-    if(mFinished)
+    if(mPlayerState != PLAYER_PLAY)
         return ;
     
     uint32_t old_player_x = mPlayerX ;
@@ -81,7 +80,7 @@ void Level::movePlayer(MoveDirection d)
     else  if(operator()(new_player_x,new_player_y) == Level::Earth || operator()(new_player_x,new_player_y) == Level::Void || operator()(new_player_x,new_player_y) == Level::Exit)
     {
         if(operator()(new_player_x,new_player_y) == Level::Exit)
-            mFinished = true ;
+            mPlayerState = PLAYER_WIN ;
         
             mPlayerX = new_player_x ;
             mPlayerY = new_player_y ;
@@ -246,3 +245,9 @@ void Level::initDefault()
 }
 
 
+void Level::fill( ObjectId o )
+{
+    for(int i=1;i<mSizeX-1;++i)
+		for(int j=1;j<mSizeY-1;++j)
+            operator()(i,j) = o ;
+}

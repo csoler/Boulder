@@ -16,8 +16,6 @@ void BoulderGame::init(const Level& level)
     
     mLevelState = level ;
     mtx.unlock() ;
-    
-    // init player' position, state, etc
 }
 
 void BoulderGame::start()
@@ -27,6 +25,7 @@ void BoulderGame::start()
     
     mTimer = new QTimer ;
     
+    mLevelState.startGame();
     QObject::connect(mTimer,SIGNAL(timeout()),this,SLOT(timerEvent())) ;
     mTimer->start(150) ;
 }
@@ -211,7 +210,10 @@ void BoulderGame::timerEvent()
     int y = new_state.playerY() ;
 
     if(test_bestiole(new_state,x+1,y) || test_bestiole(new_state,x-1,y) || test_bestiole(new_state,x,y+1) || test_bestiole(new_state,x,y-1))
+    {
 		explode(new_state,x,y);
+        new_state.die() ;
+    }
 
     mLevelState = new_state ;
 
@@ -222,9 +224,14 @@ void BoulderGame::timerEvent()
     }
     mtx.unlock() ;
 
-    if(mLevelState.finished())
+    if(mLevelState.playerState() == Level::PLAYER_WIN)
     {
 	    QMessageBox::information(NULL,QString("Game is terminated"),QString("C'est gagne!")) ;
+	    mTimer->stop() ;
+    }
+	else if(mLevelState.playerState() == Level::PLAYER_DEAD)
+    {
+	    QMessageBox::information(NULL,QString("Game is terminated"),QString("Perdu!")) ;
 	    mTimer->stop() ;
     }
 }

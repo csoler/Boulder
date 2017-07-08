@@ -108,7 +108,9 @@ void GameInterface::loadGame()
     _current_game = tmp_game ;
     
     gameViewer->setGame(_current_game) ;
-    //gameViewer->setCurrentMode(GAME_MODE_GAME) ;
+
+    if(gameViewer->currentMode() == GAME_MODE_NONE)
+		gameViewer->setCurrentMode(GAME_MODE_GAME) ;
     
     if(gameViewer->currentMode() == GAME_MODE_GAME)
 		_current_game->start();
