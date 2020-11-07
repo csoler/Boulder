@@ -1,11 +1,13 @@
+#pragma once
+
 #include <QPixmap>
 #include <QGLViewer/qglviewer.h>
 
-#include "Level.h"
 #include "GameDefs.h"
-#include "GameDrawer.h"
 
 class BoulderGame ;
+class GameDrawer ;
+class InterfaceButton ;
 
 class GameViewer: public QWidget
 {
@@ -29,6 +31,7 @@ public:
     
     virtual void keyPressEvent(QKeyEvent *e) ;
     
+    virtual void addButton(int x, int y, const QPixmap &pixmap);
 public slots:
     void reDraw() ;
     
@@ -36,7 +39,7 @@ private:
     void pixelCoordinatesToGameCoordinate(int x,int y,int& i,int& j) const;
 
     BoulderGame *mGame ;
-    GameDrawer mGameDrawer ;
+    GameDrawer *mGameDrawer ;
 
     float mSceneCenterX;
     float mSceneCenterY;
@@ -46,4 +49,5 @@ private:
     bool mMousePressed ;
     GameMode mCurrentMode ;
             
+    std::vector<InterfaceButton*> mButtons ;
 };

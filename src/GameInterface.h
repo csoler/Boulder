@@ -13,6 +13,14 @@
 
 class BoulderGame;
 
+class InterfaceButton
+{
+public:
+    uint32_t x ;
+    uint32_t y ;
+    QPixmap pixmap ;
+};
+
 class GameInterface: public QMainWindow, private Ui::GameInterface
 {
 	Q_OBJECT
@@ -29,6 +37,8 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 		void loadGame() ;
 
 	private:
+		void loadGame(const QString& name) ;
+
 		BoulderGame *_current_game ;
 
 private:

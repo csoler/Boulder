@@ -7,6 +7,7 @@
 #include "GameDefs.h"
 
 class BoulderGame ;
+class InterfaceButton;
 
 class GameDrawer
 {
@@ -14,6 +15,7 @@ class GameDrawer
 		GameDrawer(int W,int H);
 
 		virtual void update(const BoulderGame& game, int w, int h, GameMode m) ;
+		virtual void drawButtons(const BoulderGame& game,int w,int h,const std::vector<InterfaceButton*>& buttons);
 		virtual QPixmap pixmap() const ;
 
 	float gameCoordToWindowCoordX(int i)  ;

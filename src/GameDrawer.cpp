@@ -5,6 +5,7 @@
 #include <QColor>
 
 #include "GameDrawer.h"
+#include "GameInterface.h"
 #include "Level.h"
 #include "BoulderGame.h"
 
@@ -34,6 +35,18 @@ float GameDrawer::gameCoordToWindowCoordY(int i)
     return SQUARE_SIZE_IN_PIXELS * i + mSceneCenterY;
 }
 
+void GameDrawer::drawButtons(const BoulderGame& game,int w,int h,const std::vector<InterfaceButton*>& buttons)
+{
+    QPainter painter(&mDrawBuffer) ;
+
+    for(uint32_t i=0;buttons.size();++i)
+    {
+		painter.drawPixmap(buttons[i]->x,buttons[i]->y,buttons[i]->pixmap.width(),buttons[i]->pixmap.height(),buttons[i]->pixmap) ;
+        painter.drawRect(QRect(QPoint(buttons[i]->x,buttons[i]->y),QSize(30,30))) ;
+
+        std::cerr << "Je dessine un bouton" << std::endl;
+    }
+}
 
 void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
 {

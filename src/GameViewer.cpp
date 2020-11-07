@@ -5,6 +5,8 @@
 
 #include "Level.h"
 #include "GameViewer.h"
+#include "GameDrawer.h"
+#include "GameInterface.h"
 #include "BoulderGame.h"
 
 //#define DEBUG_GAME_VIEWER 1
@@ -12,8 +14,9 @@
 static const uint32_t SQUARE_SIZE_IN_PIXELS = 50 ;
 
 GameViewer::GameViewer(QWidget *parent)
-	:QWidget(parent), mGameDrawer(width(),height())
+	:QWidget(parent)
 {
+    mGameDrawer = new GameDrawer(width(),height());
     mGame = NULL ;
     
     mMousePressed = false ;
@@ -23,6 +26,8 @@ GameViewer::GameViewer(QWidget *parent)
     setMouseTracking(true) ;
     setFocusPolicy(Qt::StrongFocus) ;
     mCurrentMode = GAME_MODE_GAME;
+
+    addButton(30,30,QPixmap(50,50));
 }
 
 void GameViewer::mousePressEvent(QMouseEvent *e)
@@ -61,8 +66,11 @@ void GameViewer::setGame(BoulderGame *g)
     //updateGL() ;
     
     QObject::connect(mGame,SIGNAL(changed()),this,SLOT(reDraw())) ;
-                     
-    mGameDrawer.update(*g,width(),height(),mCurrentMode) ;
+
+    setGeometry(mGameDrawer->pixmap().rect());
+    updateGeometry();
+
+    mGameDrawer->update(*g,width(),height(),mCurrentMode) ;
     update() ;
 }
 
@@ -71,7 +79,11 @@ void GameViewer::reDraw()
 	if(mGame != NULL)
 	{
 		//std::cerr << "redraw!" << std::endl;
-		mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
+		mGameDrawer->update(*mGame,width(),height(),mCurrentMode) ;
+
+        if(mCurrentMode == GAME_MODE_EDITOR)
+			mGameDrawer->drawButtons(*mGame,width(),height(),mButtons);
+
 		update();
 	}
  
@@ -79,16 +91,27 @@ void GameViewer::reDraw()
 void GameViewer::resizeEvent(QResizeEvent *e)
 {
     if(mGame != NULL)
-	    mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
+	    mGameDrawer->update(*mGame,width(),height(),mCurrentMode) ;
     
     update() ;
 }
 
+void GameViewer::addButton(int x,int y,const QPixmap& pixmap)
+{
+    InterfaceButton *i = new InterfaceButton ;
+
+    i->x = x ;
+    i->y = y ;
+    i->pixmap = pixmap ;
+
+    mButtons.push_back(i);
+}
+
 void GameViewer::paintEvent(QPaintEvent *)
 {
-    QStylePainter(this).drawPixmap(0,0,mGameDrawer.pixmap()) ;
+    QStylePainter(this).drawPixmap(0,0,mGameDrawer->pixmap()) ;
 #ifdef DEBUG_GAME_VIEWER    
-    std::cerr << "In paint event. pasting pixmap of size " << mGameDrawer.pixmap().width() << "x" << mGameDrawer.pixmap().height() << std::endl;
+    std::cerr << "In paint event. pasting pixmap of size " << mGameDrawer->pixmap().width() << "x" << mGameDrawer->pixmap().height() << std::endl;
 #endif
 }
 
@@ -97,7 +120,7 @@ void GameViewer::setCurrentMode(GameMode m)
     mCurrentMode = m ;
 
     if(mGame != NULL)
-		mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
+		mGameDrawer->update(*mGame,width(),height(),mCurrentMode) ;
 
     update() ;
 }
@@ -130,8 +153,8 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
         break ;
     }
 
-    int i = mGameDrawer.windowCoordToGameCoordX(mOldMouseX) ;
-    int j = mGameDrawer.windowCoordToGameCoordY(height() -1 -mOldMouseY) ;
+    int i = mGameDrawer->windowCoordToGameCoordX(mOldMouseX) ;
+    int j = mGameDrawer->windowCoordToGameCoordY(height() -1 -mOldMouseY) ;
     
     e->accept() ;
     bool redraw = false ;
@@ -241,7 +264,11 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
    
     if(redraw)
     {
-	mGameDrawer.update(*mGame,width(),height(),mCurrentMode) ;
+	mGameDrawer->update(*mGame,width(),height(),mCurrentMode) ;
+
+        if(mCurrentMode == GAME_MODE_EDITOR)
+			mGameDrawer->drawButtons(*mGame,width(),height(),mButtons);
+
 	update() ;
     }
 }

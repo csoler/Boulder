@@ -30,6 +30,8 @@ GameInterface::GameInterface()
 	connect(actionSave,SIGNAL(triggered()),this,SLOT(saveGame())) ;
 	connect(actionLoad,SIGNAL(triggered()),this,SLOT(loadGame())) ;
 	connect(actionLevelEditor,SIGNAL(triggered()),this,SLOT(editGame())) ;
+
+    loadGame(QString("start.blv")) ;
 }
 
 void GameInterface::editGame() 
@@ -95,7 +97,11 @@ void GameInterface::loadGame()
         if(name.isNull())
             return ;
         
+        loadGame(name) ;
+}
 
+void GameInterface::loadGame(const QString& name)
+{
     BoulderGame *tmp_game = new BoulderGame ;
     tmp_game->currentState().load(name.toStdString()) ;
     
