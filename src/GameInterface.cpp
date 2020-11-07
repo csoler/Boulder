@@ -3,7 +3,7 @@
 
 #include <QKeyEvent>
 #include <QFileDialog>
-#include <QtGui/QMessageBox>
+#include <QMessageBox>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItem>
