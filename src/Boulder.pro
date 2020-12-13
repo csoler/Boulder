@@ -1,7 +1,7 @@
 TEMPLATE = app
 
-CONFIG += qt qglviewer gui
-QT += xml 
+CONFIG += qt qglviewer 
+QT += xml widgets gui opengl
 
 FORMS = GameInterface.ui
 
