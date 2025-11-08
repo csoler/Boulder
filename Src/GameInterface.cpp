@@ -10,11 +10,12 @@
 
 #include "GameInterface.h"
 #include "BoulderGame.h"
+#include "Config.h"
 
 using namespace std ;
 
 GameInterface::GameInterface()
-	:QMainWindow(NULL)
+    :QMainWindow(NULL)
 {
 	setupUi(this) ;
     

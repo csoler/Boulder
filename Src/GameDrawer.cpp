@@ -8,14 +8,15 @@
 #include "GameInterface.h"
 #include "Level.h"
 #include "BoulderGame.h"
+#include "Config.h"
 
-static const uint32_t SQUARE_SIZE_IN_PIXELS = 50 ;
 static const uint32_t mSceneCenterX = 0 ;
 static const uint32_t mSceneCenterY = 0 ;
 
 GameDrawer::GameDrawer(int W,int H)
 	:mDrawBuffer(W,H)
 {
+    SQUARE_SIZE_IN_PIXELS = game_config->getValue("GRID_CELL_SIZE",30u) ;
 }
 
 int GameDrawer::windowCoordToGameCoordX(float x) 
@@ -39,7 +40,7 @@ void GameDrawer::drawButtons(const BoulderGame& game,int w,int h,const std::vect
 {
     QPainter painter(&mDrawBuffer) ;
 
-    for(uint32_t i=0;buttons.size();++i)
+    for(uint32_t i=0;i<buttons.size();++i)
     {
 		painter.drawPixmap(buttons[i]->x,buttons[i]->y,buttons[i]->pixmap.width(),buttons[i]->pixmap.height(),buttons[i]->pixmap) ;
         painter.drawRect(QRect(QPoint(buttons[i]->x,buttons[i]->y),QSize(30,30))) ;
@@ -69,8 +70,8 @@ void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
     
     int resolution = SQUARE_SIZE_IN_PIXELS ;
             
-    for(int i=0;i<game.currentState().sizeX();++i)
-	    for(int j=0;j<game.currentState().sizeY();++j)
+    for(uint i=0;i<game.currentState().sizeX();++i)
+        for(uint j=0;j<game.currentState().sizeY();++j)
 	    {
                     float mx = gameCoordToWindowCoordX(i) ;
                     float my = gameCoordToWindowCoordX(j) ;

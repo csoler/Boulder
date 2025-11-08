@@ -3,12 +3,17 @@
 #include <QGLViewer/qglviewer.h>
 
 #include "GameInterface.h"
+#include "Config.h"
+
+Config *game_config = nullptr;
 
 int main(int argc,char *argv[])
 {
 	QApplication app(argc,argv) ;
     
-    	GameInterface I ;
+    game_config = new Config("boulder.cfg");
+
+    GameInterface I;
 
 	I.show();
 

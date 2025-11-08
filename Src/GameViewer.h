@@ -8,6 +8,7 @@
 class BoulderGame ;
 class GameDrawer ;
 class InterfaceButton ;
+class Config;
 
 class GameViewer: public QWidget
 {
@@ -16,6 +17,8 @@ class GameViewer: public QWidget
 public:
         
     GameViewer(QWidget *parent=NULL) ;
+
+    void init(const Config& conf);
 
     void setGame(BoulderGame *g) ;
     void setCurrentMode(GameMode m) ;

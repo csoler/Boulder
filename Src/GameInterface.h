@@ -12,6 +12,7 @@
 #include "ui_GameInterface.h"
 
 class BoulderGame;
+class Config;
 
 class InterfaceButton
 {
@@ -26,7 +27,7 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 	Q_OBJECT
 
 	public:
-		GameInterface() ;
+        GameInterface();
 
 	private slots:
 		void quit() const ;
