@@ -11,6 +11,7 @@
 #include "GameInterface.h"
 #include "BoulderGame.h"
 #include "Config.h"
+#include "PreferencesDialog.h"
 
 using namespace std ;
 
@@ -31,11 +32,17 @@ GameInterface::GameInterface()
 	connect(actionSave,SIGNAL(triggered()),this,SLOT(saveGame())) ;
 	connect(actionLoad,SIGNAL(triggered()),this,SLOT(loadGame())) ;
 	connect(actionLevelEditor,SIGNAL(triggered()),this,SLOT(editGame())) ;
+    connect(actionPreferences,SIGNAL(triggered()),this,SLOT(preferences())) ;
 
     loadGame(QString("start.blv")) ;
 }
 
-void GameInterface::editGame() 
+void GameInterface::preferences()
+{
+    PreferencesDialog().exec();
+}
+
+void GameInterface::editGame()
 {
     if(gameViewer->currentMode() == GAME_MODE_EDITOR)
     {

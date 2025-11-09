@@ -24,7 +24,9 @@ public:
     int windowCoordToGameCoordX(float x) ;
     int windowCoordToGameCoordY(float y) ;
 
+    void setCellSize(uint s);
 private:
+
     QPixmap mDrawBuffer ;
 
     QPixmap getImageForObjectId(const Level::ObjectId &oid);

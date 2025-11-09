@@ -36,6 +36,7 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 		void saveGame() const ;
 		void about() const ;
 		void loadGame() ;
+        void preferences() ;
 
 	private:
 		void loadGame(const QString& name) ;

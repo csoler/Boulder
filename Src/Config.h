@@ -31,8 +31,10 @@ class Config: public std::map<std::string,std::string>
 		{
 			FILE *f = fopen(filename.c_str(),"r") ;
 
+            mFilename = filename;
+
 			if(f == NULL)
-				throw std::runtime_error("Could not open config file " + filename) ;
+                return;
 
 			char buff[500] ;
 			int lineno = 0 ;
@@ -44,8 +46,6 @@ class Config: public std::map<std::string,std::string>
 				int lq = 0 ;
 				char *p = buff ;
 				char *q = buff ;
-				char *p1 = NULL ;
-				char *p2 = NULL ;
 				char *r = NULL ;
 
 				if(strlen(buff) > 499)
@@ -86,7 +86,6 @@ cont:		;
 
 			fclose(f) ;
 		}
-		Config() {} // constructor to make a blank config file.
 
 		template<class T> void setValue(const std::string& name,const T& value)
 		{
@@ -112,12 +111,21 @@ cont:		;
 			return t ;
 		}
 
-		void save(const std::string& fname) const
-		{
-			std::ofstream of(fname.c_str()) ;
-			of << (*this) ;
-			of.close() ;
-		}
+        void save(const std::string& fname = std::string()) const
+        {
+            if(fname.empty())
+            {
+                std::ofstream of(mFilename.c_str()) ;
+                of << (*this) ;
+                of.close() ;
+            }
+            else
+            {
+                std::ofstream of(fname.c_str()) ;
+                of << (*this) ;
+                of.close() ;
+            }
+        }
 
 		friend std::ostream& operator<<(std::ostream& out,const Config& conf)
 		{
@@ -126,6 +134,8 @@ cont:		;
 
 			return out ;
 		}
+
+        std::string mFilename;
 };
 
 extern Config *game_config;

@@ -11,8 +11,6 @@
 
 //#define DEBUG_GAME_VIEWER 1
 
-static const uint32_t SQUARE_SIZE_IN_PIXELS = 50 ;
-
 GameViewer::GameViewer(QWidget *parent)
 	:QWidget(parent)
 {
@@ -216,28 +214,33 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 	    break ;
 
     case Qt::Key_X: if(i >= 0 && i < mGame->currentState().sizeX() && j >= 0 && j < mGame->currentState().sizeY())
+        {
 						if(e->modifiers() & Qt::ShiftModifier)
 							mGame->currentState().fill(Level::MetalWall0);
 				        else
 		            mGame->currentState()(i,j) = Level::MetalWall0 ;
+    }
 	    redraw = true ;
 	    break ;
 
     case Qt::Key_S: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
+        {
 
 						if(e->modifiers() & Qt::ShiftModifier)
 							mGame->currentState().fill(Level::Stone);
 				        else
-        mGame->currentState()(i,j) = Level::Stone ;
+                mGame->currentState()(i,j) = Level::Stone ;
+        }
 	    redraw = true ;
 	    break ;
 
     case Qt::Key_E: if(i > 0 && i < mGame->currentState().sizeX()-1 && j > 0 && j < mGame->currentState().sizeY()-1) 
-
+{
 						if(e->modifiers() & Qt::ShiftModifier)
 							mGame->currentState().fill(Level::Earth);
 				        else
         mGame->currentState()(i,j) = Level::Earth ;
+        }
 	    redraw = true ;
 	    break ;
 

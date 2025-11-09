@@ -16,7 +16,12 @@ static const uint32_t mSceneCenterY = 0 ;
 GameDrawer::GameDrawer(int W,int H)
 	:mDrawBuffer(W,H)
 {
-    SQUARE_SIZE_IN_PIXELS = game_config->getValue("GRID_CELL_SIZE",30u) ;
+    setCellSize(game_config->getValue("GRID_CELL_SIZE",30u)) ;
+}
+
+void GameDrawer::setCellSize(uint s)
+{
+    SQUARE_SIZE_IN_PIXELS = s;
 }
 
 int GameDrawer::windowCoordToGameCoordX(float x) 
@@ -36,7 +41,7 @@ float GameDrawer::gameCoordToWindowCoordY(int i)
     return SQUARE_SIZE_IN_PIXELS * i + mSceneCenterY;
 }
 
-void GameDrawer::drawButtons(const BoulderGame& game,int w,int h,const std::vector<InterfaceButton*>& buttons)
+void GameDrawer::drawButtons(const BoulderGame& /* game */,int /* w */,int /* h */,const std::vector<InterfaceButton*>& buttons)
 {
     QPainter painter(&mDrawBuffer) ;
 
@@ -51,6 +56,8 @@ void GameDrawer::drawButtons(const BoulderGame& game,int w,int h,const std::vect
 
 void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
 {
+    SQUARE_SIZE_IN_PIXELS = game_config->getValue("GRID_CELL_SIZE",30u);
+
     if(mDrawBuffer.width() != w || mDrawBuffer.height() != h)
         mDrawBuffer = QPixmap(w,h) ;
     
@@ -162,9 +169,3 @@ QPixmap GameDrawer::getGameSprite(const Level::ObjectId& oid,int resolution)
         return it->second ;
 }
 
-//void GameDrawer::drawGameContent(QPainter& painter)
-//{
-//    if(!mGame)
-//        return ;
-//    
-//}
