@@ -274,5 +274,7 @@ void GameViewer::keyPressEvent(QKeyEvent *e)
 
 	update() ;
     }
+
+    QWidget::keyPressEvent(e);
 }
 

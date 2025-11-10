@@ -25,10 +25,11 @@ public:
     int windowCoordToGameCoordY(float y) ;
 
     void setCellSize(uint s);
-private:
 
+private:
     QPixmap mDrawBuffer ;
 
+    void drawTextBox(QPainter &painter, QPixmap &pix, int i, int j, const QString& text) const;
     QPixmap getImageForObjectId(const Level::ObjectId &oid);
     QPixmap getGameSprite(const Level::ObjectId& oid,int resolution);
 

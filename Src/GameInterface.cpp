@@ -66,6 +66,22 @@ void GameInterface::editGame()
     }
 }
 
+void GameInterface::keyPressEvent(QKeyEvent *e)
+{
+    if(e->key() == Qt::Key_F5)
+    {
+        if(isFullScreen())
+        {
+            std::cerr << "Switching to windowed." << std::endl;
+            showNormal();
+        }
+        else
+        {
+            std::cerr << "Switching to fullscreen." << std::endl;
+            showFullScreen();
+        }
+    }
+}
 void GameInterface::quit() const
 {
 	exit(0) ;

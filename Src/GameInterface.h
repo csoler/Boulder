@@ -29,7 +29,7 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 	public:
         GameInterface();
 
-	private slots:
+    private slots:
 		void quit() const ;
 		void newGame() ;
 		void editGame() ;
@@ -38,7 +38,10 @@ class GameInterface: public QMainWindow, private Ui::GameInterface
 		void loadGame() ;
         void preferences() ;
 
-	private:
+    protected:
+        virtual void keyPressEvent(QKeyEvent *e) override;
+
+    private:
 		void loadGame(const QString& name) ;
 
 		BoulderGame *_current_game ;

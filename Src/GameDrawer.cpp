@@ -86,12 +86,7 @@ void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
                     painter.drawPixmap(mx,my,getGameSprite( game.currentState()(i,j), resolution )) ;
 	    }
     
-    QFont font(painter.font()) ;
-    font.setPointSize(40) ;
-    
-    painter.setPen(QRgb(0xffffffff)) ;
-    painter.setFont(font) ;
-    painter.drawText(50,150,QString::number(level.collectedDiamonds())) ;
+    drawTextBox(painter,mDrawBuffer,50,150,QString::number(level.collectedDiamonds()) + " / " + QString::number(level.requiredDiamonds()));
 
     if(m == GAME_MODE_EDITOR)
     {
@@ -101,6 +96,27 @@ void GameDrawer::update(const BoulderGame& game,int w,int h,GameMode m)
 
         painter.drawRect(mDrawBuffer.rect());
     }
+}
+
+void GameDrawer::drawTextBox(QPainter& painter,QPixmap& pix,int i, int j, const QString& text) const
+{
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
+
+    QFont font(painter.font()) ;
+    font.setPointSize(40) ;
+    painter.setFont(font);
+
+    int text_width  = QFontMetricsF(font).width(text);
+    int text_height = QFontMetricsF(font).height();
+
+    QRect rect(i, j, text_width*1.1, text_height*1.1);
+    QColor bgColor(0, 0, 0, 128);  // black with 50% opacity
+
+    painter.fillRect(rect, bgColor);
+
+    painter.setPen(QRgb(0xffffffff)) ;
+    painter.drawText(i+text_width*0.05,j+text_height*0.85,text);
 }
 
 QPixmap GameDrawer::pixmap() const

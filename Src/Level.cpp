@@ -162,10 +162,10 @@ void Level::load(const std::string &fname)
            is >> s ;
            operator()(j,i) = Level::ObjectId(s - ' ');
 
-	   std::cerr << "\"" << s << "\"" << std::endl;
+       //std::cerr << "\"" << s << "\"" << std::endl;
        }
        is >> s ;
-	   std::cerr << "\"" << s << "\"" << std::endl;
+       //std::cerr << "\"" << s << "\"" << std::endl;
 
        assert(s == '\n');
        

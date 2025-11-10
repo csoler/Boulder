@@ -69,6 +69,7 @@ public:
 	void load(const std::string& fname) ;
 
 	uint32_t collectedDiamonds() const { return mCollectedDiamonds ; }
+    uint32_t requiredDiamonds() const { return mDiamondsToCollect ; }
 
     void fill( ObjectId o ) ;
 
